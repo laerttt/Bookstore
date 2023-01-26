@@ -37,7 +37,7 @@
 
 **_If the book does not exist in stock there should be a warning !!_**
 <br /> **_The software should provide him the total amountof the bill and it should be in printable format ([BillNo].txt) !!_**
-<br /> The updates in the software file should be done  automatically by adding the data into the respective files.
+The updates in the software file should be done  automatically by adding the data into the respective files.
 
 
 -[ ] Manager
