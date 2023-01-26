@@ -28,7 +28,7 @@
 
 ## User Levels
 
-- [ ] Librarian
+- [ ] **Librarian**
     - Checkout Books
     - Create Bills
     - Enter data of bought books
