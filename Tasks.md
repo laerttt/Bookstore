@@ -27,7 +27,7 @@
 
 
 ## User Levels
--[ ] **Librarian**
+-[ ] Librarian
     - Checkout Books
     - Create Bills
     - Enter data of bought books
@@ -38,7 +38,7 @@
 <br /> **_The software should provide him the total amountof the bill and it should be in printable format ([BillNo].txt) !!_**
 <br /> The updates in the software file should be done  automatically by adding the data into the respective files.
 
--[ ] **Manager**
+-[ ] Manager
   - Modify the stock
     - Add/Remove
   - Add categories
@@ -51,7 +51,7 @@
       - Daily/Monthly/Yearly
 
 **_The manager should  be informed when entered in the system if there are few (usually less than 5) items of a book in the bookstore stock._**
--[ ] **Administrator**
+-[ ] Administrator
   - Everything from Librarian and Manager
   - Manage employees
     - Registering
