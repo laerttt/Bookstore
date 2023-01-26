@@ -28,7 +28,7 @@
 
 ## User Levels
 
--[ ] Librarian
+- [ ] Librarian
     - Checkout Books
     - Create Bills
     - Enter data of bought books
@@ -37,10 +37,10 @@
 
 **_If the book does not exist in stock there should be a warning !!_**
 <br /> **_The software should provide him the total amountof the bill and it should be in printable format ([BillNo].txt) !!_**
-The updates in the software file should be done  automatically by adding the data into the respective files.
+<br /> The updates in the software file should be done  automatically by adding the data into the respective files.
 
 
--[ ] Manager
+- [ ] Manager
   - Modify the stock
     - Add/Remove
   - Add categories
