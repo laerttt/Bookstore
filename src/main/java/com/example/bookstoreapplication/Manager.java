@@ -3,23 +3,24 @@ package com.example.bookstoreapplication;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Librarian extends Person {
-    private int librarianID;
+public class Manager extends Person{
+
     private int salary;
-
-    public Librarian(String name, String surname, Date date, int ID) {
-        super(name, surname, date, role.LIBRARIAN);
-        this.librarianID = ID;
+    public Manager(String name, String surname, Date date) {
+        super(name, surname, date, role.MANAGER);
     }
-
-    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email) {
-        super(name, surname, date, role.LIBRARIAN);
-        this.librarianID = ID;
-        this.setPhoneNumber(phoneNumber);
+    public Manager(String name, String surname, Date date, String phoneNumber, String email, int salary){
+        super(name, surname, date, role.MANAGER);
         this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
+        this.salary = salary;
     }
+
 
     //getters
+    public int getSalary(){
+        return this.salary;
+    }
     @Override
     protected String getUserName() {
         return super.userName;
@@ -30,21 +31,12 @@ public class Librarian extends Person {
         return super.password;
     }
     @Override
-    public String getEmail() {
+    public String getEmail(){
         return super.email;
     }
-
-    public int getLibrarianID() {
-        return this.librarianID;
-    }
-
     @Override
-    public String getPhoneNumber() {
+    public String getPhoneNumber(){
         return super.phoneNumber;
-    }
-
-    public int getSalary() {
-        return this.salary;
     }
 
     @Override
@@ -62,7 +54,24 @@ public class Librarian extends Person {
         return super.birthDate;
     }
 
+
     //setters
+    public void setSalary(int salary){
+        this.salary = salary;
+    }
+    @Override
+    public void setPhoneNumber(String number) throws InputMismatchException {
+        try {                            //if the number entered matches the albanian number tamplate
+            if (number.matches("\\+355\\s6[7-9]\\s\\d{2}\\s\\d{2}\\s\\d{3}"))
+                super.phoneNumber = number;
+            else {
+                throw new InputMismatchException();
+            }
+        }
+        catch(InputMismatchException ex){
+            System.out.print("Invalid Phone Number");
+        }
+    }
     @Override
     public void setEmail(String email) throws InputMismatchException {
         try {                            //if the number entered matches the albanian number tamplate
@@ -75,34 +84,14 @@ public class Librarian extends Person {
             System.out.print("Invalid Email Address");
         }
     }
-
-    @Override
-    public void setPhoneNumber(String number) throws InputMismatchException {
-        try {                            //if the number entered matches the albanian number tamplate
-            if (number.matches("\\+355\\s6[7-9]\\s\\d{2}\\s\\d{2}\\s\\d{3}"))
-                super.phoneNumber = number;
-            else {
-                throw new InputMismatchException();
-            }
-        } catch (InputMismatchException ex) {
-            System.out.print("Invalid Phone Number");
-        }
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
     @Override
     protected void setName(String name) {
         super.name = name;
     }
-
     @Override
     protected void setSurname(String surname) {
         super.surname = surname;
     }
-
     @Override
     protected void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;

@@ -3,23 +3,19 @@ package com.example.bookstoreapplication;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Librarian extends Person {
-    private int librarianID;
+public class Administrator extends Person {
     private int salary;
 
-    public Librarian(String name, String surname, Date date, int ID) {
-        super(name, surname, date, role.LIBRARIAN);
-        this.librarianID = ID;
+    public Administrator(String name, String surname, Date date) {
+        super(name, surname, date, role.ADMINISTRATOR);
     }
 
-    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email) {
-        super(name, surname, date, role.LIBRARIAN);
-        this.librarianID = ID;
+    public Administrator(String name, String surname, Date date, String phoneNumber, String email) {
+        super(name, surname, date, role.ADMINISTRATOR);
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
     }
 
-    //getters
     @Override
     protected String getUserName() {
         return super.userName;
@@ -29,15 +25,12 @@ public class Librarian extends Person {
     protected String getPassword() {
         return super.password;
     }
+
+    //getters
     @Override
     public String getEmail() {
         return super.email;
     }
-
-    public int getLibrarianID() {
-        return this.librarianID;
-    }
-
     @Override
     public String getPhoneNumber() {
         return super.phoneNumber;
@@ -107,6 +100,7 @@ public class Librarian extends Person {
     protected void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;
     }
+
     @Override
     protected void setUserName(String userName) {
         super.userName = userName;
@@ -117,3 +111,4 @@ public class Librarian extends Person {
         super.password = password;
     }
 }
+

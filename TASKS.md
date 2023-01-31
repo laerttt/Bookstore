@@ -1,5 +1,7 @@
 # Tasks
 ## Classes
+### People
+Abstract Superclass of Librarian Manager Administrator Author
 ### Book
 - [ ] ISBN of the book
 - [ ] Title 
@@ -12,18 +14,18 @@
 - [ ] Author
 - [ ] Stock
 ### Bills
-- [ ] Bill number (or Order Id) 
+- [ ] Bill number (or Order ID) 
 - [ ] Quantities
 - [ ] Prices
 - [ ] Date of transaction. 
-### Manager
-- [ ] Name
-- [ ] Surname
-- [ ] Birthday
-- [ ] PhoneNumber
-- [ ] Email
-- [ ] Salary
-- [ ] Access Level
+### Manager/Librarian
+- [x] Name
+- [x] Surname
+- [x] Birthday
+- [x] PhoneNumber
+- [x] Email
+- [x] Salary
+- [x] Access Level
 
 
 ## User Levels
