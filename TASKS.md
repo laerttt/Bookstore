@@ -64,3 +64,10 @@ Abstract Superclass of Librarian Manager Administrator Author
     - Access information
   - Total income/cost during a period of time
   - Modify permissions for Managers/Librarians
+## Controls
+- [ ] LogIn
+- [ ] Librarian
+- [ ] Manager
+  - Lib
+  - Stat
+- [ ] Admin
