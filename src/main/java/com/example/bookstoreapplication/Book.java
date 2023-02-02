@@ -78,6 +78,9 @@ public class Book implements Serializable {
     public String getISBN(){
         return this.ISBN;
     }
+    public int getStock(){
+        return this.stock;
+    }
 
 
 
