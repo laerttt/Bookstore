@@ -8,7 +8,7 @@ public class LogInControls {
      * Takes as args username password of log in to check if it is valid or not.
      * @param userName;
      * @param password;
-     * @return accesLevel or -1 if user not found;
+     * @return accessLevel or -1 if user not found;
      * @throws IOException;
      * @throws ClassNotFoundException;
      */
