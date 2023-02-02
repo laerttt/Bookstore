@@ -65,7 +65,7 @@ Abstract Superclass of Librarian Manager Administrator Author
   - Total income/cost during a period of time
   - Modify permissions for Managers/Librarians
 ## Controls
-- [ ] LogIn
+- [x] LogIn
 - [ ] Librarian
 - [ ] Manager
   - Lib
