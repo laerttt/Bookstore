@@ -30,7 +30,7 @@ Abstract Superclass of Librarian Manager Administrator Author
 
 ## User Levels
 
-- [ ] **Librarian**
+- [x] **Librarian**
     - Checkout Books
     - Create Bills
     - Enter data of bought books
@@ -42,7 +42,7 @@ Abstract Superclass of Librarian Manager Administrator Author
 <br /> The updates in the software file should be done  automatically by adding the data into the respective files.
 
 
-- [ ] **Manager**
+- [x] **Manager**
   - Modify the stock
     - Add/Remove
   - Check performance of the librarians
@@ -55,7 +55,7 @@ Abstract Superclass of Librarian Manager Administrator Author
 
 **_The manager should  be informed when entered in the system if there are few (usually less than 5) items of a book in the bookstore stock._**
 
-- [ ] **Administrator**
+- [x] **Administrator**
   - Everything from Librarian and Manager
   - Manage employees
     - Registering
