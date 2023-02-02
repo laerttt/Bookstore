@@ -1,14 +1,18 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Bill {
+public class Bill implements Serializable {
     public static int billNumber;
     private int numberOfBooks;
     private ArrayList<String> books = new ArrayList<String>();
     private int totalPrice=0;
     private Date date;
+    Bill(){
+
+    }
     Bill( ArrayList<String> books, Date date){
         this.numberOfBooks = books.size();
         this.date = date;

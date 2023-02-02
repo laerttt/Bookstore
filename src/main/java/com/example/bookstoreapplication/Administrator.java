@@ -1,11 +1,14 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Administrator extends Person {
+public class Administrator extends Person implements Serializable {
     private int salary;
-
+    public Administrator(){
+        super();
+    }
     public Administrator(String name, String surname, Date date) {
         super(name, surname, date, role.ADMINISTRATOR);
     }
@@ -16,17 +19,19 @@ public class Administrator extends Person {
         this.setEmail(email);
     }
 
+
+
+
+    //getters
+    @Override
+    protected String getPassword() {
+        return super.password;
+    }
     @Override
     protected String getUserName() {
         return super.userName;
     }
 
-    @Override
-    protected String getPassword() {
-        return super.password;
-    }
-
-    //getters
     @Override
     public String getEmail() {
         return super.email;
@@ -53,6 +58,11 @@ public class Administrator extends Person {
     @Override
     protected Date getBirthDate() {
         return super.birthDate;
+    }
+
+    @Override
+    protected int getAccessLevel() {
+        return super.accessLevel;
     }
 
     //setters

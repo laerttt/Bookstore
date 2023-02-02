@@ -2,7 +2,8 @@ package com.example.bookstoreapplication;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,21 +13,26 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Date date = new Date();
-//        Person laert = new Librarian("Laert", "Huti", date,4);
-
-        ArrayList<String> test = new ArrayList<>();
-        test.add("Përse me tërheq seksi i njëjtë\nAutori: Kelvin Gjikola");
-        test.add("3000");
-        test.add("Boli dhe sufllaqja. Si të ushqehemi shëndetshëm?\nAutori: Kelvin Gjikola");
-        test.add("2000");
-        test.add("Java coding dhe sufllaqet e Oles\nAutori: Kelvin Gjikola");
-        test.add("4500");
-        test.add("Ndihmë u bera gej\nAutori: Kelvin Gjikola");
-        test.add("2250");
-        Bill bill = new Bill(test, date);
-        System.out.print(bill.toString());
-
+        Person laert = new Librarian("Laert", "Huti", date,4);
+        laert.setUserName("laertHuti");
+        laert.setPassword("123");
+        Person kelvin = new Manager("kelvin", "gjik", date);
+        kelvin.setUserName("kelvingj");
+        kelvin.setPassword("123");
+        Person ang = new Administrator("angel", "l", date);
+        ang.setUserName("angell");
+        ang.setPassword("123");
+        ArrayList<Person> employee = new ArrayList<>();
+        employee.add(laert);
+        employee.add(kelvin);
+        employee.add(ang);
+        try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("Employee.dat"))
+        ){
+            for (Person person : employee)
+                output.writeObject(person);
+        }
+        System.out.println(LogInControls.checkLogIn("laetHuti","123"));
     }
 }

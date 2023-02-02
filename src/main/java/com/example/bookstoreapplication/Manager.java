@@ -1,11 +1,15 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Manager extends Person{
+public class Manager extends Person implements Serializable {
 
     private int salary;
+    public Manager(){
+        super();
+    }
     public Manager(String name, String surname, Date date) {
         super(name, surname, date, role.MANAGER);
     }
@@ -52,6 +56,10 @@ public class Manager extends Person{
     @Override
     protected Date getBirthDate() {
         return super.birthDate;
+    }
+    @Override
+    protected int getAccessLevel() {
+        return super.accessLevel;
     }
 
 

@@ -1,12 +1,17 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Librarian extends Person {
-    private int librarianID;
-    private int salary;
+public class Librarian extends Person implements Serializable {
 
+    private int salary;
+    private int librarianID;
+    public Librarian(){
+        super();
+
+    }
     public Librarian(String name, String surname, Date date, int ID) {
         super(name, surname, date, role.LIBRARIAN);
         this.librarianID = ID;
@@ -24,7 +29,6 @@ public class Librarian extends Person {
     protected String getUserName() {
         return super.userName;
     }
-
     @Override
     protected String getPassword() {
         return super.password;
@@ -37,7 +41,6 @@ public class Librarian extends Person {
     public int getLibrarianID() {
         return this.librarianID;
     }
-
     @Override
     public String getPhoneNumber() {
         return super.phoneNumber;
@@ -60,6 +63,10 @@ public class Librarian extends Person {
     @Override
     protected Date getBirthDate() {
         return super.birthDate;
+    }
+    @Override
+    protected int getAccessLevel() {
+        return super.accessLevel;
     }
 
     //setters
@@ -111,9 +118,15 @@ public class Librarian extends Person {
     protected void setUserName(String userName) {
         super.userName = userName;
     }
-
     @Override
     protected void setPassword(String password) {
         super.password = password;
+    }
+
+
+
+    @Override
+    public String toString(){
+        return this.getName()+" "+this.getUserName()+" "+this.getPassword();
     }
 }

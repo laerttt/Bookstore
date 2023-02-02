@@ -14,10 +14,10 @@ Abstract Superclass of Librarian Manager Administrator Author
 - [ ] Author
 - [ ] Stock
 ### Bills
-- [ ] Bill number (or Order ID) 
-- [ ] Quantities
-- [ ] Prices
-- [ ] Date of transaction. 
+- [x] Bill number (or Order ID) 
+- [x] Quantities
+- [x] Prices
+- [x] Date of transaction. 
 ### Manager/Librarian
 - [x] Name
 - [x] Surname
@@ -45,7 +45,6 @@ Abstract Superclass of Librarian Manager Administrator Author
 - [ ] **Manager**
   - Modify the stock
     - Add/Remove
-  - Add categories
   - Check performance of the librarians
     - Books sold
     - Bills

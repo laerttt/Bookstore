@@ -1,8 +1,9 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Person{
+public abstract class Person implements Serializable {
     protected String name;
     protected String surname;
     protected Date birthDate;
@@ -16,14 +17,17 @@ public abstract class Person{
         ADMINISTRATOR,
         ROOT
     }
-    int accessLevel = -1;
+    protected int accessLevel = -1;
 
+
+    protected Person(){
+    }
     /**
      * Constructor for library employee
-     * @param name
-     * @param surname
-     * @param date
-     * @param role
+     * @param name;
+     * @param surname;
+     * @param date;
+     * @param role;
      */
     protected Person(String name, String surname, Date date, role role){
         this.name = name;
@@ -37,6 +41,7 @@ public abstract class Person{
         }
     }
     //getters
+    protected abstract int getAccessLevel();
     protected abstract String getUserName();
     protected abstract String getPassword();
     protected abstract String getEmail();
