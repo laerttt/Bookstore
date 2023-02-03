@@ -30,6 +30,7 @@ public abstract class Person implements Serializable {
      * @param role;
      */
     protected Person(String name, String surname, Date date, role role){
+
         this.name = name;
         this.surname = surname;
         this.birthDate = date;

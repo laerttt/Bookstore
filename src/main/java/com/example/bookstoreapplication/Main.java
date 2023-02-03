@@ -15,6 +15,13 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Date date = new Date();
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("Books.dat"));
+//        ManagerControls.addBooks("kari","keli","romanc",1, "6967","botimeBOli", date, 690,100,1000);
+//        System.out.println("added");
+                Book A = new Book();
+        A = (Book) in.readObject();
+        System.out.println(A.bookProperties());
+
 
     }
 }

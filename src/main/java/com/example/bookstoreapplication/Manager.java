@@ -1,10 +1,13 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
 public class Manager extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 12345678;
 
     private int salary;
     public Manager(){
