@@ -17,7 +17,8 @@ public class LogInControls {
              ObjectInputStream input = new ObjectInputStream(finput)
         ) {
             while (finput.available() > 0) {
-                Person A = new Librarian();
+                new Librarian();
+                Person A;
                 A = (Person) input.readObject();
                 if (A.getUserName().contentEquals(userName)) {
                     if (A.getPassword().contentEquals(password))
