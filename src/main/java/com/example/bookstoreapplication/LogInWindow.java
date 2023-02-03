@@ -14,29 +14,30 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 import static com.example.bookstoreapplication.LogInControls.checkLogIn;
 
-public class LogInWindow extends Application  {
-static int StageChooser=0;
-    TextField Username= new TextField();
-    TextField Password= new TextField();
+public class LogInWindow extends Application {
+    static int StageChooser = 0;
+    public static  TextField Username = new TextField();
+    static TextField Password = new TextField();
+
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
 // Pane
         GridPane Pane1 = new GridPane();
-        Pane1.setPadding(new Insets(20,40,40,40));
+        Pane1.setPadding(new Insets(20, 40, 40, 40));
         Pane1.setHgap(6);
         Pane1.setVgap(6);
 // Username text
-        Label txt= new Label("Enter your username :");
+        Label txt = new Label("Enter your username :");
         txt.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
 
         // Password text
-        Label txt2= new Label("Enter your password :");
-        txt2.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));;
+        Label txt2 = new Label("Enter your password :");
+        txt2.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
+        ;
 
 // Pass and User Textfield
 
@@ -46,7 +47,7 @@ static int StageChooser=0;
 
         btAdd.setOnAction(e -> {
             try {
-              StageChooser= checkLogIn(Username.getText(), Password.getText());
+                StageChooser = checkLogIn(Username.getText(), Password.getText());
                 System.out.println(StageChooser);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -57,13 +58,11 @@ static int StageChooser=0;
         GridPane.setHalignment(btAdd, HPos.RIGHT);
 
 
-
-
         // Adding to pane
-        Pane1.add(Username,1,0);
+        Pane1.add(Username, 1, 0);
         Pane1.add(Password, 1, 1);
-        Pane1.add(txt,0,0);
-        Pane1.add (txt2,0,1);
+        Pane1.add(txt, 0, 0);
+        Pane1.add(txt2, 0, 1);
         Pane1.add(btAdd, 1, 3);
 
 
@@ -74,25 +73,9 @@ static int StageChooser=0;
         System.out.println(StageChooser);
 
     }
+
     public static void main(String[] args) {
         launch();
-
-    }
-
-
-//class LogInHandler implements EventHandler<ActionEvent>{
-    //@Override
-    //  public void handle(ActionEvent e){
-
-    //        if(checkLogIn(Username.getText(),Password.getText())!=-1){
+    }}
 
 
-    //      }
-
-
-}
-
-//}
-
-//
-// }

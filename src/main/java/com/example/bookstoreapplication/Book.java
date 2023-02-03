@@ -30,7 +30,11 @@ public class Book implements Serializable {
         this.stock = quantity;
         this.ISBN = ISBN;
     }
-
+public Book(String Title,String Author,int sellingPrice){
+        this.title=Title;
+        this.author=Author;
+        this.sellingPrice=sellingPrice;
+}
     // setters
     public void setSellingPrice(int x){
         this.sellingPrice = x;
