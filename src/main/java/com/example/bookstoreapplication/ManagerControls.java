@@ -95,5 +95,7 @@ public class ManagerControls {
             }
         }
     }
+    public static void managerStatsSearchLib(String x){
 
+    }
 }

@@ -29,6 +29,7 @@ public class Bill implements Serializable {
         this.date = date;
         this.books = books;
         this.librarianID = librarianID;
+        this.numberOfBooks = books.size();
     }
 
     @Override

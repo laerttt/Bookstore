@@ -16,7 +16,6 @@ public class LogInControls {
         try (FileInputStream finput = new FileInputStream("Employee.dat");
              ObjectInputStream input = new ObjectInputStream(finput)
         ) {
-            boolean t = true;
             while (finput.available() > 0) {
                 Person A = new Librarian();
                 A = (Person) input.readObject();
