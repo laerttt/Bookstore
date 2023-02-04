@@ -31,17 +31,6 @@ public static ArrayList Books = new ArrayList<>();
        totalPrice = a.getSellingPrice();
        return totalPrice+totalPrice;
     }
-
-    /**
-     * Each time button Add Book To Bill is pressed
-     * @param A
-     */
-   static void addBooksToBill(Book A){
-        Books.add(A);
-
-   }
-
-
     static double getTotalPrice(){
 
        return totalPrice;
@@ -71,8 +60,8 @@ static int billLibrarianId() throws IOException, ClassNotFoundException {
      * @throws ClassNotFoundException
      */
 
-    static Bill getBill() throws IOException, ClassNotFoundException {
-      Bill A= new Bill(Books,date,billLibrarianId());
+    public static Bill getBill(ArrayList Books) throws IOException, ClassNotFoundException {
+      Bill A= new Bill(Books,date,33333,getTotalPrice());
         return A;
     }
 
