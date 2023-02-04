@@ -96,5 +96,8 @@ public class Book implements Serializable {
                 "\nSupplier: "+this.supplier+
                 "\nSelling Price: "+this.sellingPrice;
     }
+    public String getBookSearchProperties(){
+        return this.title+this.author +this.category+this.supplier+this.ISBN;
+    }
 }
 

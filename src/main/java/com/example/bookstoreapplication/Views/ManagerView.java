@@ -13,9 +13,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ManagerView extends Application {
     private Object temp;
@@ -65,25 +67,43 @@ public class ManagerView extends Application {
         //book tableView
         TableColumn<Book, String> bcolTitle = new TableColumn<Book, String>("Title");
         bcolTitle.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-        bcolTitle.setMinWidth(150);
+
         TableColumn<Book, String> bcolAuthor = new TableColumn<Book, String>("Author");
         bcolAuthor.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
         bcolAuthor.setMinWidth(100);
+        bcolAuthor.setMaxWidth(100);
         TableColumn<Book, Integer> bcolStock = new TableColumn<Book, Integer>("Stock");
         bcolStock.setCellValueFactory(new PropertyValueFactory<Book, Integer>("stock"));
         bcolStock.setMaxWidth(50);
         bcolStock.setMinWidth(50);
         TableColumn<Book, String> bcolISBN = new TableColumn<Book, String>("ISBN");
         bcolISBN.setCellValueFactory(new PropertyValueFactory<Book, String>("iSBN"));
+        bcolISBN.setMinWidth(100);
+        bcolISBN.setMaxWidth(100);
         TableColumn<Book, Integer> bcolPrice = new TableColumn<Book, Integer>("Price");
         bcolPrice.setCellValueFactory(new PropertyValueFactory<Book, Integer>("purchasedPrice"));
+        bcolPrice.setMinWidth(50);
+        bcolPrice.setMaxWidth(50);
         TableColumn<Book, Integer> bcolSellPrice = new TableColumn<Book, Integer>("Selling Price");
         bcolSellPrice.setCellValueFactory(new PropertyValueFactory<Book, Integer>("sellingPrice"));
+        bcolSellPrice.setMinWidth(100);
+        bcolSellPrice.setMaxWidth(100);
         TableColumn<Book, Integer> bcolOrgPrice = new TableColumn<Book, Integer>("Original Price");
         bcolOrgPrice.setCellValueFactory(new PropertyValueFactory<Book, Integer>("originalPrice"));
-        bookTableView.getColumns().addAll(bcolTitle, bcolAuthor, bcolISBN, bcolStock, bcolSellPrice, bcolPrice, bcolOrgPrice);
+        bcolOrgPrice.setMinWidth(100);
+        bcolOrgPrice.setMaxWidth(100);
+        TableColumn<Book, String> bcolCategory = new TableColumn<Book, String>("Category");
+        bcolCategory.setCellValueFactory(new PropertyValueFactory<Book, String>("category"));
+        bcolCategory.setMaxWidth(80);
+        bcolCategory.setMinWidth(80);
+        TableColumn<Book, String> bcolSupplier = new TableColumn<Book, String>("Supplier");
+        bcolSupplier.setCellValueFactory(new PropertyValueFactory<Book, String>("supplier"));
+        bcolSupplier.setMaxWidth(120);
+        bcolSupplier.setMinWidth(120);
+        bookTableView.getColumns().addAll(bcolTitle, bcolAuthor, bcolCategory, bcolISBN,bcolSupplier, bcolStock, bcolSellPrice, bcolPrice, bcolOrgPrice);
         bookTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookTableView.setMinWidth(1000);
+        bookTableView.setMaxHeight(375);
         ArrayList<Book> books = BookControls.getBooks();
         for(Book book : books){
             bookTableView.getItems().add(book);
@@ -108,8 +128,9 @@ public class ManagerView extends Application {
             tfSellPrice.setPromptText("Bookstore Selling Price");
         TextField tfOrgPrice = new TextField();
             tfOrgPrice.setPromptText("Original Book Price");
-        TextField searchBook = new TextField("Search");
-            searchBook.setPromptText("Enter Title/ISBN");
+        TextField tfsearchBook = new TextField();
+            tfsearchBook.setPrefWidth(500);
+            tfsearchBook.setPromptText("\t\t\t\t\t\t\t Enter Title / Author / ISBN / Supplier");
 
         //lowStock textFields
         TextField tfLowQuan = new TextField();
@@ -145,9 +166,8 @@ public class ManagerView extends Application {
             btLogOut.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
         GridPane.setHalignment(btLogOut, HPos.RIGHT);
 
-        Button titleSearch = new Button("Search");
-        Button ISBNSearch = new Button("ISBN Search");
-
+        Button bttitleSearch = new Button("Search");
+        Button btClearSearch = new Button("Clear");
         //lowStock buttons
         Button btAddStock = new Button("Add Stock") ;
             btAddStock.setStyle("-fx-background-color: darkgreen;-fx-text-fill: white;");
@@ -160,11 +180,12 @@ public class ManagerView extends Application {
         mainGridPane.add(gridPane,0,0);
         mainGridPane.add(rightSearchTView,1,0);
         rightSearchTView.getChildren().addAll(search,bookTableView);
-        search.getChildren().addAll(searchBook,titleSearch,ISBNSearch);
+        rightSearchTView.setSpacing(5);
+        search.getChildren().addAll(tfsearchBook,bttitleSearch, btClearSearch);
+        search.setAlignment(Pos.CENTER);
         search.setSpacing(5);
 
         //addBooks
-        gridPane.setPadding(new Insets(0, 0, 0, 0));
         gridPane.add(btCheck,0,0);
         gridPane.add(lbTitle,0,1);
         gridPane.add(tfTitle,1,1);
@@ -237,7 +258,30 @@ public class ManagerView extends Application {
             }
             lowStockStage.show();
         });
+        bttitleSearch.setOnAction(e-> {
+            try(FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
+            ObjectInputStream input = new ObjectInputStream(fInput)){
+                ArrayList<Book> booksFound = new ArrayList<>();
+                bookTableView.getItems().clear();
+                while(fInput.available()>0){
+                    Book A = (Book) input.readObject();
+                    if((Pattern.compile(tfsearchBook.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getBookSearchProperties()).find())){
+                        booksFound.add(A);
+                    }
+                }
+                for(Book book : booksFound)
+                    bookTableView.getItems().add(book);
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
 
+        });
+        btClearSearch.setOnAction(e->{
+            tfsearchBook.clear();
+            bookTableView.getItems().clear();
+            for(Book book : books)
+                bookTableView.getItems().add(book);
+        });
         //lowStockAActions
         btLowClose.setOnAction(e ->  { tableView.getItems().clear();
             tfLowQuan.clear();
