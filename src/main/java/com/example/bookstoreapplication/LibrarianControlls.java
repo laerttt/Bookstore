@@ -23,7 +23,7 @@ public class LibrarianControlls {
 
     static double totalPrice=0;
 static Date date= new Date();
-public static ArrayList Books = new ArrayList<>();
+public static ArrayList<Book> Books = new ArrayList<>();
 
     static double bookTotal() throws IOException, ClassNotFoundException {
 

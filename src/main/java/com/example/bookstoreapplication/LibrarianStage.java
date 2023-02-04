@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.bookstoreapplication.LibrarianControlls.*;
@@ -33,66 +34,31 @@ public class LibrarianStage extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
   //
-        TableColumn<Book, String> column1 =
-               new TableColumn<>("Books");
-        column1.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("title"));
-       TableColumn<Book, String> column2 =
-               new TableColumn<>("Author");
-        column2.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("author"));
-        TableColumn<Book, Double> column3 =
-               new TableColumn<>("Price");
-       column3.setCellValueFactory(
-               new PropertyValueFactory<Book, Double>("sellingPrice"));
-       BooksTable.getColumns().add(column1);
-       BooksTable.getColumns().add(column2);
-       BooksTable.getColumns().add(column3);
-Books.add(new Book("Laert Byca","bIG gay", 10));
-       for(int i=0;i<Books.size();i++) {
-     BooksTable.getItems().add(new Book(getBookTitle(i),getBookAuthor(i),getBookPrice(i)));
-     }
+        TableColumn<Book, String> column1 = new TableColumn<Book, String>("Title");
+        column1.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+       TableColumn<Book, String> column2 = new TableColumn<Book, String>("Author");
+        column2.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+        TableColumn<Book, Integer> column3 = new TableColumn<Book, Integer>("Price");
+       column3.setCellValueFactory(new PropertyValueFactory<Book, Integer>("sellingPrice"));
+       BooksTable.getColumns().addAll(column1,column2,column3);
+        for(Book book : Books) {
+            BooksTable.getItems().add(book);
+        }
 
+        TableColumn<Book, String> billTitle = new TableColumn<Book, String>("Title");
+        billTitle.setCellValueFactory(new PropertyValueFactory<Book,String>("title"));
+        TableColumn<Book, String> billAuthor = new TableColumn<Book, String>("Author");
+        billAuthor.setCellValueFactory(new PropertyValueFactory<Book,String>("author"));
+        TableColumn<Book, Integer> billPrice = new TableColumn<Book, Integer>("Selling Price");
+        billPrice.setCellValueFactory(new PropertyValueFactory<Book,Integer>("sellingPrice"));
+        BillsTable.getColumns().addAll(billTitle,billAuthor,billPrice);
 
-        TableColumn<Book, String> Column1 =
-                new TableColumn<>("Books");
-        column1.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("title"));
-        TableColumn<Book, String> Column2 =
-                new TableColumn<>("Author");
-        column2.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("author"));
-        TableColumn<Book, Double> Column3 =
-                new TableColumn<>("Price");
-        column3.setCellValueFactory(
-                new PropertyValueFactory<Book, Double>("sellingPrice"));
-        BillsTable.getColumns().add(Column1);
-        BillsTable.getColumns().add(Column2);
-        BillsTable.getColumns().add(Column3);
-
-
-
-        BooksTable.setOnMouseClicked(e ->{
-
-                ExtraBooks.add( BooksTable.getSelectionModel().getSelectedItem());
-            System.out.print(BooksTable.getSelectionModel().getSelectedItem());
-        });
-
-
-
-
-        AddToBill.setOnAction(e -> {
-            try {
-                BillsTable.getItems().clear();
-               Book A = (Book)  BooksTable.getSelectionModel().getSelectedItem();
-                MainBill = getBill(ExtraBooks);
-                BillsTable.getItems().addAll(A);
-
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+        AddToBill.setOnAction(e->{
+            ArrayList<Book> books = new ArrayList<>();
+            books.add((Book)BooksTable.getSelectionModel().getSelectedItem());
+            BillsTable.getItems().clear();
+            for(Book book : books)
+                BillsTable.getItems().add(book);
         });
         GridPane Pane1= new GridPane();
         Pane1.setVgap(10);
@@ -109,6 +75,7 @@ Books.add(new Book("Laert Byca","bIG gay", 10));
     }
 
         public static void main(String[] args) {
+            Books.add(new Book("Laert Byca","bIg Gay", "ok",5,"23409587","s", new Date(), 3245,345,345));
             launch();
     }
 
