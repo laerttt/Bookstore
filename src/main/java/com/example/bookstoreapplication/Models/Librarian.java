@@ -1,49 +1,56 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
-public class Manager extends Person implements Serializable {
+public class Librarian extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
 
     private int salary;
-    public Manager(){
+    private int librarianID;
+    public Librarian(){
         super();
+
     }
-    public Manager(String name, String surname, Date date) {
-        super(name, surname, date, role.MANAGER);
-    }
-    public Manager(String name, String surname, Date date, String phoneNumber, String email, int salary){
-        super(name, surname, date, role.MANAGER);
-        this.setEmail(email);
-        this.setPhoneNumber(phoneNumber);
-        this.salary = salary;
+    public Librarian(String name, String surname, Date date, int ID) {
+        super(name, surname, date, role.LIBRARIAN);
+        this.librarianID = ID;
     }
 
+    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email) {
+        super(name, surname, date, role.LIBRARIAN);
+        this.librarianID = ID;
+        this.setPhoneNumber(phoneNumber);
+        this.setEmail(email);
+    }
 
     //getters
-    public int getSalary(){
-        return this.salary;
-    }
     @Override
-    protected String getUserName() {
+    public String getUserName() {
         return super.userName;
     }
-
     @Override
-    protected String getPassword() {
+    public String getPassword() {
         return super.password;
     }
     @Override
-    public String getEmail(){
+    public String getEmail() {
         return super.email;
     }
+
+    public int getLibrarianID() {
+        return this.librarianID;
+    }
     @Override
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return super.phoneNumber;
+    }
+
+    public int getSalary() {
+        return this.salary;
     }
 
     @Override
@@ -61,28 +68,11 @@ public class Manager extends Person implements Serializable {
         return super.birthDate;
     }
     @Override
-    protected int getAccessLevel() {
+    public int getAccessLevel() {
         return super.accessLevel;
     }
 
-
     //setters
-    public void setSalary(int salary){
-        this.salary = salary;
-    }
-    @Override
-    public void setPhoneNumber(String number) throws InputMismatchException {
-        try {                            //if the number entered matches the albanian number tamplate
-            if (number.matches("\\+355\\s6[7-9]\\s\\d{2}\\s\\d{2}\\s\\d{3}"))
-                super.phoneNumber = number;
-            else {
-                throw new InputMismatchException();
-            }
-        }
-        catch(InputMismatchException ex){
-            System.out.print("Invalid Phone Number");
-        }
-    }
     @Override
     public void setEmail(String email) throws InputMismatchException {
         try {                            //if the number entered matches the albanian number tamplate
@@ -95,25 +85,51 @@ public class Manager extends Person implements Serializable {
             System.out.print("Invalid Email Address");
         }
     }
+
+    @Override
+    public void setPhoneNumber(String number) throws InputMismatchException {
+        try {                            //if the number entered matches the albanian number tamplate
+            if (number.matches("\\+355\\s6[7-9]\\s\\d{2}\\s\\d{2}\\s\\d{3}"))
+                super.phoneNumber = number;
+            else {
+                throw new InputMismatchException();
+            }
+        } catch (InputMismatchException ex) {
+            System.out.print("Invalid Phone Number");
+        }
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     @Override
     protected void setName(String name) {
         super.name = name;
     }
+
     @Override
     protected void setSurname(String surname) {
         super.surname = surname;
     }
+
     @Override
     protected void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;
     }
     @Override
-    protected void setUserName(String userName) {
+    public void setUserName(String userName) {
         super.userName = userName;
     }
+    @Override
+    public void setPassword(String password) {
+        super.password = password;
+    }
+
+
 
     @Override
-    protected void setPassword(String password) {
-        super.password = password;
+    public String toString(){
+        return this.getName()+" "+this.getUserName()+" "+this.getPassword();
     }
 }

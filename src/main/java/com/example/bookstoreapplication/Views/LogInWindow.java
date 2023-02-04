@@ -1,8 +1,7 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Views;
 
+import com.example.bookstoreapplication.Controls.LogInControls;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,20 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Date;
-
-import static com.example.bookstoreapplication.LogInControls.checkLogIn;
 
 public class LogInWindow extends Application {
     @Override
@@ -57,6 +49,7 @@ public class LogInWindow extends Application {
 
         //buttons
         Button btcloseWarning = new Button("Close");
+        btcloseWarning.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
         Button btLogIn = new Button("Log In");
         btLogIn.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
 

@@ -1,5 +1,7 @@
 package com.example.bookstoreapplication;
 
+import com.example.bookstoreapplication.Controls.BookControls;
+import com.example.bookstoreapplication.Models.Book;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,17 +16,18 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Date date = new Date();
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("Books.dat"));
-//        ManagerControls.addBooks("kari","keli","romanc",1, "6967","botimeBOli", date, 690,100,1000);
-//        System.out.println("added");
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/main/resources/Books.dat"));
+        BookControls.addBooks("kari","keli","romanc",1, "6967","botimeBOli", date, 690,100,1000);
+        System.out.println("added");
                 Book A;
-//        A = (Book) in.readObject();
-//        System.out.println(A.bookProperties());
+        A = (Book) in.readObject();
+        System.out.println(A.bookProperties());
 //        Person laert = new Librarian("laert", "huti", date, 4);
 //        laert.setPassword("boli123");
-//        laert.setUserName("laertHuti");
-//        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("Employee.dat"));
+//        laert.setUserName("kelvinGjikola");
+//        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"));
 //        o.writeObject(laert);
-        System.out.println(LogInControls.checkLogIn("laertHuti", "boli123"));
+//        System.out.println(LogInControls.checkLogIn("kelvinGJ", "nukjombol>:("));
+//        LogInWindow.launch();
     }
 }

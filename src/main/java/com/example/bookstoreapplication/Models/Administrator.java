@@ -1,4 +1,4 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,11 +27,11 @@ public class Administrator extends Person implements Serializable {
 
     //getters
     @Override
-    protected String getPassword() {
+    public String getPassword() {
         return super.password;
     }
     @Override
-    protected String getUserName() {
+    public String getUserName() {
         return super.userName;
     }
 
@@ -64,7 +64,7 @@ public class Administrator extends Person implements Serializable {
     }
 
     @Override
-    protected int getAccessLevel() {
+    public int getAccessLevel() {
         return super.accessLevel;
     }
 
@@ -115,12 +115,12 @@ public class Administrator extends Person implements Serializable {
     }
 
     @Override
-    protected void setUserName(String userName) {
+    public void setUserName(String userName) {
         super.userName = userName;
     }
 
     @Override
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         super.password = password;
     }
 }
