@@ -1,10 +1,13 @@
 package com.example.bookstoreapplication;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Bill implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 12345678;
     public static int billNumber;
     private int numberOfBooks;
     private ArrayList<String> books = new ArrayList<String>();
@@ -26,6 +29,7 @@ public class Bill implements Serializable {
         this.date = date;
         this.books = books;
         this.librarianID = librarianID;
+        this.numberOfBooks = books.size();
     }
 
     @Override
