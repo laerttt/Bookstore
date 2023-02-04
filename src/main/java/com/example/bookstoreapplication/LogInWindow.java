@@ -5,80 +5,100 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 
 import static com.example.bookstoreapplication.LogInControls.checkLogIn;
 
 public class LogInWindow extends Application {
-    static int StageChooser = 0;
-    public static  TextField Username = new TextField();
-    static TextField Password = new TextField();
-
     @Override
-    public void start(Stage stage) throws IOException, ClassNotFoundException {
-// Pane
-        GridPane Pane1 = new GridPane();
-        Pane1.setPadding(new Insets(20, 40, 40, 40));
-        Pane1.setHgap(6);
-        Pane1.setVgap(6);
-// Username text
-        Label txt = new Label("Enter your username :");
-        txt.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
+    public void start(Stage LogInStage) throws Exception {
+        //stages
+        Stage warningStage = new Stage();
 
-        // Password text
-        Label txt2 = new Label("Enter your password :");
-        txt2.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
-        ;
+        //create pane and stylize
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setPadding(new Insets(50,20,10,20));
+        gridPane.setStyle("-fx-font-size: 15px;");
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(20,20,20,20));
 
-// Pass and User Textfield
+        //labels
+        Label lbUserName = new Label("UserName:");
+        Label lbPassword = new Label("Password");
+
+        //text
+        Text warningText = new Text("Invalid Username/Password!");
+        warningText.setStyle("-fx-font-size: 15px;");
+
+        //textFields
+        TextField tfUsrN = new TextField();
+        PasswordField tfPass = new PasswordField();
+        tfUsrN.setPromptText("UserName");
+        tfPass.setPromptText("Password");
+
+        //buttons
+        Button btcloseWarning = new Button("Close");
+        Button btLogIn = new Button("Log In");
+        btLogIn.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
 
 
-        Button btAdd = new Button("Log In");
-
-
-        btAdd.setOnAction(e -> {
+        //buttonActions
+        btcloseWarning.setOnAction(e->warningStage.close());
+        btLogIn.setOnAction(e-> {
+            int x = -2;
             try {
-                StageChooser = checkLogIn(Username.getText(), Password.getText());
-                System.out.println(StageChooser);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
+                x = LogInControls.checkLogIn(tfUsrN.getText(), tfPass.getText());
+            } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
+            finally{
+                if(x==-1)
+                   warningStage.show() ;
+            }
         });
-        GridPane.setHalignment(btAdd, HPos.RIGHT);
 
+        //arrangements
+        gridPane.add(lbUserName,0,0);
+        gridPane.add(tfUsrN,1,0);
+        gridPane.add(lbPassword,0,1);
+        gridPane.add(tfPass,1,1);
+        gridPane.add(btLogIn,1,2);
+        GridPane.setHalignment(btLogIn,HPos.RIGHT);
 
-        // Adding to pane
-        Pane1.add(Username, 1, 0);
-        Pane1.add(Password, 1, 1);
-        Pane1.add(txt, 0, 0);
-        Pane1.add(txt2, 0, 1);
-        Pane1.add(btAdd, 1, 3);
+        borderPane.setBottom(btcloseWarning);
+        borderPane.setCenter(warningText);
+        BorderPane.setAlignment(btcloseWarning,Pos.CENTER_RIGHT);
+        //scene
+        Scene warningScene = new Scene(borderPane,220,100);
+        Scene scene = new Scene(gridPane);
 
-
-        Scene scene = new Scene(Pane1);
-        stage.setScene(scene);
-        stage.show();
-
-        System.out.println(StageChooser);
-
+        warningStage.setResizable(false);
+        warningStage.setScene(warningScene);
+        warningStage.setTitle("Invalid input");
+        warningStage.initOwner(LogInStage);
+        warningStage.initModality(Modality.APPLICATION_MODAL);
+        LogInStage.setScene(scene);
+        LogInStage.setResizable(false);
+        LogInStage.setTitle("Bookstore(Log In)");
+        LogInStage.show();
     }
-
-    public static void main(String[] args) {
-        launch();
-
-    }
-
-
 }

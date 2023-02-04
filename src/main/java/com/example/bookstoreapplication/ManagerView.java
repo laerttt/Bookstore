@@ -2,8 +2,10 @@ package com.example.bookstoreapplication;
 
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,13 +22,14 @@ import java.util.Stack;
 public class ManagerView extends Application {
     @Override
     public void start(Stage managerStage) throws Exception {
-
+        //panes
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setVgap(10);
-        gridPane.setStyle("-fx-font-size: 15px");
-        TextField tfTitle = new TextField();
+        gridPane.setVgap(5);
+        gridPane.setStyle("-fx-font-size: 15px;");
 
+        //textFields
+        TextField tfTitle = new TextField();
         TextField tfAuthor = new TextField();
         TextField tfCategory = new TextField();
         TextField tfQuantity = new TextField();
@@ -35,6 +38,8 @@ public class ManagerView extends Application {
         TextField tfSupplier = new TextField();
         TextField tfSellPrice = new TextField();
         TextField tfOrgPrice = new TextField();
+
+        //labels
         Label lbTitle = new Label("Title:");
         Label lbAuthor = new Label("Author:");
         Label lbCategory = new Label("Category:");
@@ -44,11 +49,20 @@ public class ManagerView extends Application {
         Label lbPurchasePrice = new Label("Purchased Price:");
         Label lbSellPrice = new Label("Selling Price:");
         Label lbOrgPrice = new Label("Original Price:");
+
+        //buttons
         Button btCheck = new Button("Check Stock");
+            btCheck.setStyle("-fx-background-color: orange;-fx-text-fill: white;");
         Button btAdd = new Button("Add");
+            btAdd.setStyle("-fx-background-color: darkgreen;-fx-text-fill: white;");
+            GridPane.setHalignment(btAdd, HPos.RIGHT);
         Button btLibrarians = new Button("Librarians");
         Button btStat = new Button("Statistics");
         Button btLogOut = new Button("Log Out");
+            btLogOut.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+
+
+        //arrangements
         gridPane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         gridPane.add(btCheck,0,0);
         gridPane.add(lbTitle,0,1);
@@ -69,13 +83,13 @@ public class ManagerView extends Application {
         gridPane.add(tfSellPrice,1,8);
         gridPane.add(lbOrgPrice,0,9);
         gridPane.add(tfOrgPrice,1,9);
-
         gridPane.add(btAdd,1,10);
         gridPane.add(btLibrarians,0,11);
         gridPane.add(btStat,1,11);
         gridPane.add(btLogOut,2,11);
 
-        //add books to dat file
+
+        //actions
         btAdd.setOnAction(e -> {
             try {
                 ManagerControls.addBooks(tfTitle.getText(),tfAuthor.getText(),
@@ -86,8 +100,7 @@ public class ManagerView extends Application {
                 throw new RuntimeException(ex);
             }
         });
-//        btLogOut.setOnAction(e -> LogInWindow.m       ain());
-//        btLogOut.setOnAction(e -> managerStage.close());
+
         Scene scene = new Scene(gridPane);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
