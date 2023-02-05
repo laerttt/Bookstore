@@ -1,13 +1,14 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Controls;
+import com.example.bookstoreapplication.Models.Bill;
+import com.example.bookstoreapplication.Models.Book;
+import com.example.bookstoreapplication.Models.Librarian;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import  java.util.ArrayList;
 import java.util.Date;
 import java.util.*;
-
-import static com.example.bookstoreapplication.LogInWindow.Username;
-
 
 
 public class LibrarianControlls {
@@ -35,24 +36,6 @@ public static ArrayList<Book> Books = new ArrayList<>();
 
        return totalPrice;
     }
-
-static int billLibrarianId() throws IOException, ClassNotFoundException {
-
-    boolean Cond=true;
-    int LibId;
-    while(Cond){
-
-            Librarian A =(Librarian) (Input.readObject());
-            if(A.getUserName()==Username.getText()){
-             LibId=A.getLibrarianID();
-                return LibId;
-            }
-
-        }
-
-    return -1;
-    }
-
     /**
      *
      * @return Used on getBillButton and in Table view Bill input

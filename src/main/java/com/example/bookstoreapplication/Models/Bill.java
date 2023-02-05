@@ -24,7 +24,7 @@ public class Bill implements Serializable {
      * @param date;
      * @param librarianID;
      */
-    Bill( ArrayList<String> books, Date date,int librarianID,double newPrice){
+    public Bill(ArrayList<String> books, Date date, int librarianID, double newPrice){
         this.numberOfBooks = books.size();
         this.date = date;
         this.books = books;
