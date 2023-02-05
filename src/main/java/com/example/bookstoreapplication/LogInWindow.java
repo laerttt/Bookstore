@@ -57,7 +57,8 @@ public class LogInWindow extends Application {
         });
         GridPane.setHalignment(btAdd, HPos.RIGHT);
 
-
+Username.setPromptText("Username");
+        Password.setPromptText("Username");
         // Adding to pane
         Pane1.add(Username, 1, 0);
         Pane1.add(Password, 1, 1);
