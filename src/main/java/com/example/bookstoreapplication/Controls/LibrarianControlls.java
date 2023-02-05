@@ -10,6 +10,9 @@ import  java.util.ArrayList;
 import java.util.Date;
 import java.util.*;
 
+import static com.example.bookstoreapplication.Views.LogInWindow.tfPass;
+import static com.example.bookstoreapplication.Views.LogInWindow.tfUsrN;
+
 
 public class LibrarianControlls {
     static ObjectInputStream Input;
@@ -26,12 +29,7 @@ public class LibrarianControlls {
 static Date date= new Date();
 public static ArrayList<Book> Books = new ArrayList<>();
 
-    static double bookTotal() throws IOException, ClassNotFoundException {
 
-       Book a = (Book) (Input.readObject());
-       totalPrice = a.getSellingPrice();
-       return totalPrice+totalPrice;
-    }
     static double getTotalPrice(){
 
        return totalPrice;
@@ -43,31 +41,34 @@ public static ArrayList<Book> Books = new ArrayList<>();
      * @throws ClassNotFoundException
      */
 
-    public static Bill getBill(ArrayList Books) throws IOException, ClassNotFoundException {
-      Bill A= new Bill(Books,date,33333,getTotalPrice());
+    public static Bill getBill(ArrayList Books,int Price) throws IOException, ClassNotFoundException {
+      Bill A= new Bill(Books,date,getCurrentLib(),Price);
         return A;
     }
 
+    public static int getCurrentLib() throws IOException, ClassNotFoundException {
+        String Username= tfUsrN.getText();
+        String Password= tfPass.getText();
+        int LibId = 0;
 
+        try (FileInputStream fInput = new FileInputStream("Employee.dat");
+             ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
+            while (fInput.available() > 0) {
 
-public static String getBookTitle(int i){
+                Librarian A = (Librarian) input.readObject();
 
-        Book A= (Book)(Books.get(i));
+                if (A.getUserName().contentEquals(Username )){
+                    if (A.getPassword().contentEquals(Password)){
+                        LibId=A.getLibrarianID();
+                    }
 
-        return A.getTitle();
-}
-    public static int getBookPrice(int i){
+                }
+            }
 
-        Book A= (Book)(Books.get(i));
+            return LibId;
+        }}
 
-        return A.getSellingPrice();
-    }
-    public static String getBookAuthor(int i){
-
-        Book A= (Book)(Books.get(i));
-
-        return A.getAuthor();
-    }
 
 
 }

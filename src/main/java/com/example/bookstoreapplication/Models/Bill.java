@@ -11,7 +11,7 @@ public class Bill implements Serializable {
     public static int billNumber;
     private int numberOfBooks;
     private ArrayList<String> books = new ArrayList<String>();
-    private double totalPrice=0;
+    private int totalPrice;
     private Date date;
     private int librarianID;
     Bill(){
@@ -24,7 +24,7 @@ public class Bill implements Serializable {
      * @param date;
      * @param librarianID;
      */
-    public Bill(ArrayList<String> books, Date date, int librarianID, double newPrice){
+    public Bill(ArrayList<String> books, Date date, int librarianID, int newPrice){
         this.numberOfBooks = books.size();
         this.date = date;
         this.books = books;
@@ -33,8 +33,14 @@ public class Bill implements Serializable {
         this.numberOfBooks = books.size();
     }
 
+public int getLibId(){
+        return this.librarianID;
 
+}
+    public int getTotalPrice(){
+        return this.totalPrice;
 
+    }
 
 
 
