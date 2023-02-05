@@ -15,6 +15,9 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Date date = new Date();
+ObjectOutputStream Outut= new ObjectOutputStream(new FileOutputStream("Books.dat"));
 
+
+Outut.writeObject(new Book("Laert Byca","bIg Gay", "ok",5,"23409587","s", new Date(), 3245,345,345));
     }
 }
