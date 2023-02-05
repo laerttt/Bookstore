@@ -29,11 +29,8 @@ public class Bill implements Serializable {
         this.date = date;
         this.books = books;
         this.librarianID = librarianID;
-<<<<<<< HEAD:src/main/java/com/example/bookstoreapplication/Bill.java
         this.totalPrice= newPrice;
-=======
         this.numberOfBooks = books.size();
->>>>>>> main:src/main/java/com/example/bookstoreapplication/Models/Bill.java
     }
 
 
