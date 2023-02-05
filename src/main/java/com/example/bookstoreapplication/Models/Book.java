@@ -1,4 +1,4 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ public class Book implements Serializable {
 
     private String ISBN;
     private String title;
-    private String author;
+    public String author;
     private String category;
     private String supplier;
     private int purchasedPrice;
@@ -33,7 +33,11 @@ public class Book implements Serializable {
         this.stock = quantity;
         this.ISBN = ISBN;
     }
-
+public Book(String Title,String Author,int sellingPrice){
+        this.title=Title;
+        this.author=Author;
+        this.sellingPrice=sellingPrice;
+}
     // setters
     public void setSellingPrice(int x){
         this.sellingPrice = x;
@@ -95,6 +99,9 @@ public class Book implements Serializable {
                 "\nIn Stock: "+this.stock+
                 "\nSupplier: "+this.supplier+
                 "\nSelling Price: "+this.sellingPrice;
+    }
+    public String getBookSearchProperties(){
+        return this.title+this.author +this.category+this.supplier+this.ISBN;
     }
 }
 
