@@ -15,7 +15,6 @@ public class Bill implements Serializable {
     private Date date;
     private int librarianID;
     Bill(){
-
     }
 
     /**
@@ -32,17 +31,9 @@ public class Bill implements Serializable {
         this.totalPrice= newPrice;
         this.numberOfBooks = books.size();
     }
-
-public int getLibId(){
-        return this.librarianID;
-
-}
     public int getTotalPrice(){
         return this.totalPrice;
 
     }
-
-
-
 }
 

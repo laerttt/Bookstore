@@ -68,13 +68,23 @@ public class LogInWindow extends Application {
                 throw new RuntimeException(ex);
             }
             finally{
+                Stage y;
                 if(x==-1)
                    warningStage.show() ;
-                else if (x==1) {
+                else if (x==2) {
                     ManagerView m = new ManagerView();
                     try {
                         System.out.println("o");
                         m.start(new Stage());
+                        LogInStage.close();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if(x == 1){
+                    LibrarianStage l = new LibrarianStage();
+                    try {
+                        l.start(new Stage());
                         LogInStage.close();
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static com.example.bookstoreapplication.Controls.LibrarianControlls.*;
 
@@ -96,9 +97,6 @@ public class LibrarianStage extends Application {
         ClearBooks.setOnAction(e->{  BooksTable.getItems().clear();
         SearchBooks.clear(); });
 
-
-
-
       // Button Design
         BillsTable.setPlaceholder(
                 new Label("No bill to display"));
@@ -125,16 +123,16 @@ public class LibrarianStage extends Application {
         Pane1.add(ClearBooks,0,3);
         Pane1.add(BooksLabel,0,1);
         Pane1.add(BillsLabel,1,1);
-        Pane1.add(btPrint,2,2);
+        Pane1.add(btPrint,1,1);
         Pane1.add(btSearch,1,0);
         Pane1.add(BillsTable,1,2);
         Pane1.add(BooksTable,0,2);
-        Pane1.add(btAdd,2,2);
+        Pane1.add(btAdd,1,1);
         Pane1.add(SearchBar,0,0);
         Pane1.setStyle("-fx-font-size:15px;");
         GridPane.setHalignment(btSearch, HPos.LEFT);
-        GridPane.setValignment(btAdd, VPos.TOP);
-        GridPane.setValignment(btPrint, VPos.CENTER);
+        GridPane.setHalignment(btAdd, HPos.LEFT);
+        GridPane.setHalignment(btPrint, HPos.RIGHT);
         GridPane.setHalignment(BooksLabel, HPos.CENTER);
         GridPane.setHalignment(BillsLabel, HPos.CENTER);
         GridPane.setHalignment(ClearBooks, HPos.CENTER);
@@ -147,24 +145,18 @@ public class LibrarianStage extends Application {
     }
 
     public static ArrayList<Book> searchBt() throws IOException, ClassNotFoundException {
-        String S= SearchBar.getText();
-
-        try (FileInputStream fInput = new FileInputStream("Books.dat");
+        try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
              ObjectInputStream input = new ObjectInputStream(fInput)
-        ) {
+        ){
             while (fInput.available() > 0) {
-
-             Book A = (Book) input.readObject();
-
-                if (A.getTitle().matches("\\w*\\s\\w*" )){
+                Book A = (Book) input.readObject();
+                if ((Pattern.compile(SearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getBookSearchProperties()).find())){
                     SearchBooks.add(A);
                     System.out.print(A.getTitle());
+                }
             }
-        }
-
             return SearchBooks;
-    }
-
+        }
     }
 
     public void printBill() throws IOException, ClassNotFoundException {
@@ -175,30 +167,17 @@ public class LibrarianStage extends Application {
             Output.writeObject(A);
             BillsTable.getItems().clear();
             BillBooks.clear();
-        MainBill= A;
+            MainBill= A;
         }
     }
     static int bookTotal() throws IOException, ClassNotFoundException {
         int totalPrice=0;
         for (int i = 0; i <BillBooks.size() ; i++) {
             Book A= BillBooks.get(i);
-        totalPrice=totalPrice+A.getSellingPrice();
+            totalPrice=totalPrice+A.getSellingPrice();
         }
-
         return totalPrice;
     }
-    public static int getBillProperties() throws IOException {
-        try (FileInputStream fInput = new FileInputStream("Books.dat");
-             ObjectInputStream input = new ObjectInputStream(fInput)
-        ) {
-        return MainBill.getTotalPrice();
-
-        }
-
-
-    }
-    
-    
 }
 
 

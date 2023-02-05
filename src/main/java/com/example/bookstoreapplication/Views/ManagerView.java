@@ -243,6 +243,7 @@ public class ManagerView extends Application {
                 x.show();
             }
         });
+
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
