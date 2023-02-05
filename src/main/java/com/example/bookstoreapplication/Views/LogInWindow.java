@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LogInWindow extends Application {
-
+    public static TextField tfUsrN = new TextField();
+    public static PasswordField tfPass = new PasswordField();
     @Override
     public void start(Stage LogInStage) throws Exception {
         //stages
@@ -43,8 +44,7 @@ public class LogInWindow extends Application {
         warningText.setStyle("-fx-font-size: 15px;");
 
         //textFields
-        TextField tfUsrN = new TextField();
-        PasswordField tfPass = new PasswordField();
+
         tfUsrN.setPromptText("UserName");
         tfPass.setPromptText("Password");
 

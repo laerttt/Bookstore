@@ -17,16 +17,17 @@ import java.util.ArrayList;
 
 import static com.example.bookstoreapplication.Controls.LibrarianControlls.*;
 
+
 public class LibrarianStage extends Application {
     public static   TableView BooksTable = new TableView<>();
     public static   TableView BillsTable = new TableView<>();
     static ArrayList<Book> SearchBooks = new ArrayList<Book>();
 
     public static TextField SearchBar = new TextField();
-    public static TextField ISBNSearch = new TextField();
+    
     public static ArrayList<Book> BillBooks = new ArrayList<>();
-    Bill MainBill;
-    public static ArrayList<Book> Null = new ArrayList<>();
+    
+    static Bill MainBill;
     Button btAdd = new Button("Add");
     Button btSearch= new Button("Search");
     Button btPrint = new Button("Print");
@@ -74,6 +75,15 @@ public class LibrarianStage extends Application {
         billISBN.setCellValueFactory(new PropertyValueFactory<Book,String>("ISBN"));
         BillsTable.getColumns().addAll(billTitle,billAuthor,billPrice,billISBN);
 
+        btPrint.setOnAction(O->{
+            try {
+                printBill();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         btAdd.setOnAction(e->{
 
             BillBooks.add((Book)BooksTable.getSelectionModel().getSelectedItem());
@@ -161,12 +171,34 @@ public class LibrarianStage extends Application {
         try (FileOutputStream fOutput = new FileOutputStream("Bills.dat");
              ObjectOutputStream Output = new ObjectOutputStream(fOutput);
         ){
-            Bill A = (Bill) getBill(BillBooks);
+            Bill A = getBill(BillBooks,bookTotal());
             Output.writeObject(A);
             BillsTable.getItems().clear();
             BillBooks.clear();
+        MainBill= A;
         }
     }
+    static int bookTotal() throws IOException, ClassNotFoundException {
+        int totalPrice=0;
+        for (int i = 0; i <BillBooks.size() ; i++) {
+            Book A= BillBooks.get(i);
+        totalPrice=totalPrice+A.getSellingPrice();
+        }
+
+        return totalPrice;
+    }
+    public static int getBillProperties() throws IOException {
+        try (FileInputStream fInput = new FileInputStream("Books.dat");
+             ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
+        return MainBill.getTotalPrice();
+
+        }
+
+
+    }
+    
+    
 }
 
 
