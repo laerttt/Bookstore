@@ -1,12 +1,10 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Views;
+import com.example.bookstoreapplication.Models.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,9 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 
-import static com.example.bookstoreapplication.LibrarianControlls.*;
+import static com.example.bookstoreapplication.Controls.LibrarianControlls.*;
 
 public class LibrarianStage extends Application {
     public static   TableView BooksTable = new TableView<>();
@@ -139,11 +136,6 @@ public class LibrarianStage extends Application {
 
     }
 
-        public static void main(String[] args) {
-            Books.add(new Book("Laert Byca","bIg Gay", "ok",5,"23409587","s", new Date(), 3245,345,345));
-            launch();
-    }
-
     public static ArrayList<Book> searchBt() throws IOException, ClassNotFoundException {
         String S= SearchBar.getText();
 
@@ -169,23 +161,12 @@ public class LibrarianStage extends Application {
         try (FileOutputStream fOutput = new FileOutputStream("Bills.dat");
              ObjectOutputStream Output = new ObjectOutputStream(fOutput);
         ){
-            Bill A = getBill(BillBooks);
+            Bill A = (Bill) getBill(BillBooks);
             Output.writeObject(A);
             BillsTable.getItems().clear();
             BillBooks.clear();
-
-
-
-
-
         }
-
     }
-
-
-
-
-
 }
 
 

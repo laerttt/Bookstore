@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LogInWindow extends Application {
+
     @Override
     public void start(Stage LogInStage) throws Exception {
         //stages
@@ -78,7 +79,6 @@ public class LogInWindow extends Application {
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-
                 }
             }
         });
