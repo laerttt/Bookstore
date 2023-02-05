@@ -60,12 +60,26 @@ public class LogInWindow extends Application {
             int x = -2;
             try {
                 x = LogInControls.checkLogIn(tfUsrN.getText(), tfPass.getText());
+                System.out.println(x);
+                tfPass.clear();
+                tfUsrN.clear();
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
             finally{
                 if(x==-1)
                    warningStage.show() ;
+                else if (x==1) {
+                    ManagerView m = new ManagerView();
+                    try {
+                        System.out.println("o");
+                        m.start(new Stage());
+                        LogInStage.close();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
             }
         });
 
