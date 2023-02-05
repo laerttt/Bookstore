@@ -237,7 +237,12 @@ public class ManagerView extends Application {
             }
             managerStage.close();
         });
-
+        bookTableView.setOnMouseClicked(e ->{
+            if(e.getClickCount()==2){
+                Stage x = bookoInfo(bookTableView.getSelectionModel().getSelectedItem());
+                x.show();
+            }
+        });
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
@@ -342,5 +347,41 @@ public class ManagerView extends Application {
         lowStockStage.setScene(lowStockScene);
         lowStockStage.setMinWidth(400);
         return lowStockStage;
+    }
+
+    public Stage bookoInfo(Book book){
+        //stage
+        Stage stage = new Stage();
+
+        //Pane
+        BorderPane bPane = new BorderPane();
+
+        //Scene
+        Scene scene = new Scene(bPane);
+
+        //messageLabel
+        Label info = new Label(book.getBookProperties());
+
+        //buttons
+        Button close = new Button("Close");
+        close.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
+
+        //arrangements
+        bPane.setPadding(new Insets(10));
+        bPane.setStyle("-fx-font-size: 15px;");
+        bPane.setCenter(info);
+        BorderPane.setAlignment(info,Pos.CENTER);
+        bPane.setBottom(close);
+        BorderPane.setAlignment(close,Pos.CENTER_RIGHT);
+
+        //actions
+        close.setOnAction(e -> stage.close());
+
+        stage.setTitle("Book Info");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+        return  stage;
     }
 }
