@@ -1,9 +1,12 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Book implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 12345678;
 
     private String ISBN;
     private String title;
@@ -13,7 +16,7 @@ public class Book implements Serializable {
     private int purchasedPrice;
     private int originalPrice;
     private int sellingPrice;
-    private int stock=0;
+    private int stock;
     private Date purchasedDate;
 
     public Book(){
@@ -86,10 +89,19 @@ public Book(String Title,String Author,int sellingPrice){
         return this.stock;
     }
 
-
-
     public void addStock(int x){
         this.stock+=x;
+    }
+    public String bookProperties(){
+        return this.title+" - " +this.author
+                +"\nCategory: "+this.category+
+                "\nISBN: "+this.ISBN+
+                "\nIn Stock: "+this.stock+
+                "\nSupplier: "+this.supplier+
+                "\nSelling Price: "+this.sellingPrice;
+    }
+    public String getBookSearchProperties(){
+        return this.title+this.author +this.category+this.supplier+this.ISBN;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +30,7 @@ public abstract class Person implements Serializable {
      * @param role;
      */
     protected Person(String name, String surname, Date date, role role){
+
         this.name = name;
         this.surname = surname;
         this.birthDate = date;
@@ -41,9 +42,9 @@ public abstract class Person implements Serializable {
         }
     }
     //getters
-    protected abstract int getAccessLevel();
-    protected abstract String getUserName();
-    protected abstract String getPassword();
+    public abstract int getAccessLevel();
+    public abstract String getUserName();
+    public abstract String getPassword();
     protected abstract String getEmail();
     protected abstract String getPhoneNumber();
     protected abstract String getName();
@@ -55,6 +56,6 @@ public abstract class Person implements Serializable {
     protected abstract void setName(String name);
     protected abstract void setSurname(String surname);
     protected abstract void setBirthDate(Date birthDate);
-    protected abstract void setUserName(String userName);
-    protected abstract void setPassword(String password);
+    public abstract void setUserName(String userName);
+    public abstract void setPassword(String password);
 }

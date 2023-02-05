@@ -1,10 +1,13 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 
 public class Manager extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 12345678;
 
     private int salary;
     public Manager(){
@@ -26,12 +29,12 @@ public class Manager extends Person implements Serializable {
         return this.salary;
     }
     @Override
-    protected String getUserName() {
+    public String getUserName() {
         return super.userName;
     }
 
     @Override
-    protected String getPassword() {
+    public String getPassword() {
         return super.password;
     }
     @Override
@@ -58,7 +61,7 @@ public class Manager extends Person implements Serializable {
         return super.birthDate;
     }
     @Override
-    protected int getAccessLevel() {
+    public int getAccessLevel() {
         return super.accessLevel;
     }
 
@@ -105,12 +108,12 @@ public class Manager extends Person implements Serializable {
         super.birthDate = birthDate;
     }
     @Override
-    protected void setUserName(String userName) {
+    public void setUserName(String userName) {
         super.userName = userName;
     }
 
     @Override
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         super.password = password;
     }
 }

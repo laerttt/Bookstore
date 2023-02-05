@@ -1,4 +1,5 @@
-package com.example.bookstoreapplication;
+package com.example.bookstoreapplication.Controls;
+import com.example.bookstoreapplication.Models.*;
 
 import java.io.*;
 
@@ -12,13 +13,12 @@ public class LogInControls {
      * @throws IOException;
      * @throws ClassNotFoundException;
      */
-    static int checkLogIn(String userName, String password) throws IOException, ClassNotFoundException {
-        try (FileInputStream finput = new FileInputStream("Employee.dat");
+    public static int checkLogIn(String userName, String password) throws IOException, ClassNotFoundException {
+        try (FileInputStream finput = new FileInputStream("src/main/resources/Employee.dat");
              ObjectInputStream input = new ObjectInputStream(finput)
         ) {
-            boolean t = true;
             while (finput.available() > 0) {
-                Person A = new Librarian();
+                Person A;
                 A = (Person) input.readObject();
                 if (A.getUserName().contentEquals(userName)) {
                     if (A.getPassword().contentEquals(password))
