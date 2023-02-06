@@ -92,6 +92,7 @@ public Book(String Title,String Author,int sellingPrice){
     public void addStock(int x){
         this.stock+=x;
     }
+    public void removeStock(int x){this.stock-=x;}
     public String getBookProperties(){
         return this.title+" - " +this.author
                 +"\nCategory: "+this.category+
