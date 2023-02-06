@@ -1,5 +1,14 @@
 package com.example.bookstoreapplication.Models;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -88,7 +97,22 @@ public class Librarian extends Person implements Serializable {
                 throw new InputMismatchException();
             }
         } catch (InputMismatchException ex) {
-            System.out.print("Invalid Email Address");
+            Stage o = new Stage();
+            Text t = new Text("Invalid Email Address");
+            t.setStyle("-fx-font-size: 15px;");
+            Button b = new Button("Close");
+            b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+            BorderPane p = new BorderPane();
+            p.setPadding(new Insets(10,10,10,10));
+            p.setBottom(b);
+            p.setCenter(t);
+            BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
+            Scene s = new Scene(p,220,100);
+            o.setScene(s);
+            o.setResizable(false);
+            o.initModality(Modality.APPLICATION_MODAL);
+            o.show();
+            b.setOnAction(z -> o.close());
         }
     }
 
@@ -101,7 +125,22 @@ public class Librarian extends Person implements Serializable {
                 throw new InputMismatchException();
             }
         } catch (InputMismatchException ex) {
-            System.out.print("Invalid Phone Number");
+            Stage o = new Stage();
+            Text t = new Text("Invalid Phone Number");
+            t.setStyle("-fx-font-size: 15px;");
+            Button b = new Button("Close");
+            b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+            BorderPane p = new BorderPane();
+            p.setPadding(new Insets(10,10,10,10));
+            p.setBottom(b);
+            p.setCenter(t);
+            BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
+            Scene s = new Scene(p,220,100);
+            o.setScene(s);
+            o.setResizable(false);
+            o.initModality(Modality.APPLICATION_MODAL);
+            o.show();
+            b.setOnAction(z -> o.close());
         }
     }
 

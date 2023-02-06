@@ -19,7 +19,6 @@ public class LogInControls {
         ) {
             while (finput.available() > 0) {
                 Person A = (Person) input.readObject();
-                System.out.println(A);
                 if (A.getUserName().contentEquals(userName)) {
                     if (A.getPassword().contentEquals(password))
                         return A.getAccessLevel();

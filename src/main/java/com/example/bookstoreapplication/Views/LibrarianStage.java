@@ -132,7 +132,6 @@ public class LibrarianStage extends Application {
                 BooksTable.getItems().add(book);
             }
             SearchBooks.clear();
-            tfSearchBar.clear();
         });
         ClearBill.setOnAction(e -> {
             BillsTable.getItems().clear();
@@ -162,7 +161,6 @@ public class LibrarianStage extends Application {
                     BooksTable.getItems().add(book);
                 }
                 SearchBooks.clear();
-                tfSearchBar.clear();
             }
         });
         BooksTable.setOnMouseClicked(e -> {
@@ -273,7 +271,6 @@ public class LibrarianStage extends Application {
                 Output.writeObject(A);
                 BillsTable.getItems().clear();
                 for (Book i : BillBooks) {
-                    System.out.println("TUJJ IK");
                     BookControls.removeBook(i);
                 }
                 BillBooks.clear();
