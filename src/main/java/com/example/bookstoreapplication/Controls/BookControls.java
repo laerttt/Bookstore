@@ -69,34 +69,27 @@ public class BookControls {
             try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
                  ObjectInputStream input = new ObjectInputStream(fInput);
             ) {
-                System.out.println("try2 creating arraylist");
-                System.out.println(fInput.available() + "i");
                 while (fInput.available() > 0) {
                     Book A = (Book) input.readObject();
                     books.add(A);
                 }
                 for (Book book : books) {
-                    System.out.println("Checking ISBN...");
                     if (book.getISBN().contentEquals(ISBN)) {
                         book.addStock(quantity);
                         found = true;
-                        System.out.println("Stock added");
                     }
                 }
             }
             try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"))) {
                 for (Book book : books) {
                     output.writeObject(book);
-                    System.out.println("updating...");
                 }
-                System.out.println("try 2 finished");
             }
         }
         if (!found) {
             try (NoHeader noHeader = new NoHeader(new FileOutputStream("src/main/resources/Books.dat", true));) {
                 Book newBook = new Book(Title, Author, Category, quantity, ISBN, Supplier, purchasedDate, purchasedPrice, originalPrice, sellingPrice);
                 noHeader.writeObject(newBook);
-                System.out.println("try 3");
             }
         }
     }
@@ -106,17 +99,13 @@ public class BookControls {
         try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
              ObjectInputStream input = new ObjectInputStream(fInput);
         ) {
-            System.out.println("try2 creating arraylist");
-            System.out.println(fInput.available() + "i");
             while (fInput.available() > 0) {
                 Book A = (Book) input.readObject();
                 books.add(A);
             }
             for (Book book : books) {
-                System.out.println("Checking ISBN...");
                 if (book.getISBN().contentEquals(ISBN)) {
                     book.addStock(quantity);
-                    System.out.println("Stock added");
                     break;
                 }
             }
@@ -124,9 +113,7 @@ public class BookControls {
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"))) {
             for (Book book : books) {
                 output.writeObject(book);
-                System.out.println("updating...");
             }
-            System.out.println("try 2 finished");
         }
     }
 
@@ -135,12 +122,33 @@ public class BookControls {
         try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
              ObjectInputStream input = new ObjectInputStream(fInput)
         ) {
-            System.out.println(fInput.available());
             while (fInput.available() > 0) {
                 books.add((Book) input.readObject());
             }
         }
         System.out.println(books);
         return books;
+    }
+    public static void removeBook(Book book){
+        ArrayList<Book> books = new ArrayList<>();
+        try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
+             ObjectInputStream input = new ObjectInputStream(fInput)) {
+            while(fInput.available()>0){
+                Book A = (Book)input.readObject();
+                if(A.getISBN().contentEquals(book.getISBN()))
+                    A.removeStock(1);
+                books.add(A);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try(FileOutputStream fOutput = new FileOutputStream("src/main/resources/Books.dat");
+            ObjectOutputStream output = new ObjectOutputStream(fOutput)){
+            for(Book bok : books){
+                output.writeObject(bok);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

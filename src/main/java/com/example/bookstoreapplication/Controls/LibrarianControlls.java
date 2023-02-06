@@ -4,9 +4,7 @@ import com.example.bookstoreapplication.Models.Book;
 import com.example.bookstoreapplication.Models.Librarian;
 import com.example.bookstoreapplication.Models.Person;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import  java.util.ArrayList;
 import java.util.Date;
 import java.util.*;
@@ -44,7 +42,7 @@ public static ArrayList<Book> Books = new ArrayList<>();
 
     public static Bill getBill(ArrayList Books,int Price) throws IOException, ClassNotFoundException {
       Bill A= new Bill(Books,date,getCurrentLib(),Price);
-        return A;
+      return A;
     }
 
     public static int getCurrentLib() throws IOException, ClassNotFoundException {
@@ -70,4 +68,5 @@ public static ArrayList<Book> Books = new ArrayList<>();
             return LibId;
         }
     }
+
 }

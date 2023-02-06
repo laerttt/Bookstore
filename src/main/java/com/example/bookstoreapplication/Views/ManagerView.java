@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -243,7 +244,25 @@ public class ManagerView extends Application {
                 x.show();
             }
         });
-
+        tfsearchBook.setOnKeyPressed(e->{
+            if(e.getCode()== KeyCode.ENTER){
+                try(FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
+                    ObjectInputStream input = new ObjectInputStream(fInput)){
+                    ArrayList<Book> booksFound = new ArrayList<>();
+                    bookTableView.getItems().clear();
+                    while(fInput.available()>0){
+                        Book A = (Book) input.readObject();
+                        if((Pattern.compile(tfsearchBook.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getBookSearchProperties()).find())){
+                            booksFound.add(A);
+                        }
+                    }
+                    for(Book book : booksFound)
+                        bookTableView.getItems().add(book);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
@@ -382,7 +401,6 @@ public class ManagerView extends Application {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
-        stage.show();
         return  stage;
     }
 }
