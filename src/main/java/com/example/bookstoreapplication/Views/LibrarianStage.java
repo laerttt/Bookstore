@@ -4,11 +4,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -75,6 +77,7 @@ public class LibrarianStage extends Application {
         TableColumn<Book, String> billISBN = new TableColumn<Book, String>("ISBN");
         billISBN.setCellValueFactory(new PropertyValueFactory<Book,String>("ISBN"));
         BillsTable.getColumns().addAll(billTitle,billAuthor,billPrice,billISBN);
+
 
         btPrint.setOnAction(O->{
             try {
@@ -152,7 +155,7 @@ public class LibrarianStage extends Application {
                 Book A = (Book) input.readObject();
                 if ((Pattern.compile(SearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getBookSearchProperties()).find())){
                     SearchBooks.add(A);
-                    System.out.print(A.getTitle());
+
                 }
             }
             return SearchBooks;
@@ -178,6 +181,9 @@ public class LibrarianStage extends Application {
         }
         return totalPrice;
     }
+
+
+
 }
 
 
