@@ -54,12 +54,12 @@ public class Librarian extends Person implements Serializable {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return super.name;
     }
 
     @Override
-    protected String getSurname() {
+    public String getSurname() {
         return super.surname;
     }
 

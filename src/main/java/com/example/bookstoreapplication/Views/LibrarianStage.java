@@ -5,8 +5,14 @@ import com.example.bookstoreapplication.NoHeader.NoHeader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+<<<<<<< HEAD
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+=======
+import javafx.geometry.VPos;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+>>>>>>> main
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -83,6 +89,7 @@ public class LibrarianStage extends Application {
         Button btLogOut = new Button("Log Out");
         btLogOut.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
 
+<<<<<<< HEAD
         //textFields
         TextField tfSearchBar = new TextField();
         tfSearchBar.setPromptText("\t\t\tSearch by Title / Author / Category / Supplier / ISBN");
@@ -95,6 +102,9 @@ public class LibrarianStage extends Application {
         lbTotal.setAlignment(Pos.CENTER);
 
         //actions
+=======
+
+>>>>>>> main
         btPrint.setOnAction(O->{
             try {
                 printBill(BillsTable);
@@ -250,7 +260,7 @@ public class LibrarianStage extends Application {
                 Book A = (Book) input.readObject();
                 if ((Pattern.compile(tfSearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getBookSearchProperties()).find())){
                     SearchBooks.add(A);
-                    System.out.print(A.getTitle());
+
                 }
             }
             return SearchBooks;
@@ -292,6 +302,7 @@ public class LibrarianStage extends Application {
         }
         return totalPrice;
     }
+<<<<<<< HEAD
     public Stage bookoInfo(Book book){
         //stage
         Stage stage = new Stage();
@@ -327,6 +338,11 @@ public class LibrarianStage extends Application {
         stage.show();
         return  stage;
     }
+=======
+
+
+
+>>>>>>> main
 }
 
 
