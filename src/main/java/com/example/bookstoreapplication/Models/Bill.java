@@ -10,7 +10,7 @@ public class Bill implements Serializable {
     private static final long serialVersionUID = 12345678;
     public static int billNumber;
     private int numberOfBooks;
-    private ArrayList<String> books = new ArrayList<String>();
+    private ArrayList<Book> books = new ArrayList<Book>();
     private int totalPrice;
     private Date date;
     private int librarianID;
@@ -23,7 +23,7 @@ public class Bill implements Serializable {
      * @param date;
      * @param librarianID;
      */
-    public Bill(ArrayList<String> books, Date date, int librarianID, int newPrice){
+    public Bill(ArrayList<Book> books, Date date, int librarianID, int newPrice){
         this.numberOfBooks = books.size();
         this.date = date;
         this.books = books;
@@ -34,6 +34,9 @@ public class Bill implements Serializable {
     public int getTotalPrice(){
         return this.totalPrice;
 
+    }
+    public ArrayList<Book> getBooks(){
+        return books;
     }
 }
 

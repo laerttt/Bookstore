@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -17,6 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.EventListener;
 
 public class LogInWindow extends Application {
     public static TextField tfUsrN = new TextField();
@@ -53,36 +56,13 @@ public class LogInWindow extends Application {
         btcloseWarning.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
         Button btLogIn = new Button("Log In");
         btLogIn.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
+        //listner
 
-
-        //buttonActions
+        //events
         btcloseWarning.setOnAction(e->warningStage.close());
         btLogIn.setOnAction(e-> {
-            int x = -2;
-            try {
-                x = LogInControls.checkLogIn(tfUsrN.getText(), tfPass.getText());
-                System.out.println(x);
-                tfPass.clear();
-                tfUsrN.clear();
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            finally{
-                Stage y;
-                if(x==-1)
-                   warningStage.show() ;
-                else if (x==2) {
-                    ManagerView m = new ManagerView();
-                    try {
-                        System.out.println("o");
-                        m.start(new Stage());
-                        LogInStage.close();
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                else if(x == 1){
-                    LibrarianStage l = new LibrarianStage();
+            switch (log()){
+                case 1 -> {LibrarianStage l = new LibrarianStage();
                     try {
                         l.start(new Stage());
                         LogInStage.close();
@@ -90,9 +70,46 @@ public class LogInWindow extends Application {
                         throw new RuntimeException(ex);
                     }
                 }
+                case 2 -> {ManagerView l = new ManagerView();
+                    try {
+                        l.start(new Stage());
+                        LogInStage.close();
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                case -1 ->{
+                    warningStage.show() ;
+                }
             }
         });
-
+        tfPass.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                switch (log()) {
+                    case 1 -> {
+                        LibrarianStage l = new LibrarianStage();
+                        try {
+                            l.start(new Stage());
+                            LogInStage.close();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    case 2 -> {
+                        ManagerView l = new ManagerView();
+                        try {
+                            l.start(new Stage());
+                            LogInStage.close();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    case -1 -> {
+                        warningStage.show();
+                    }
+                }
+            }
+        });
         //arrangements
         gridPane.add(lbUserName,0,0);
         gridPane.add(tfUsrN,1,0);
@@ -117,5 +134,20 @@ public class LogInWindow extends Application {
         LogInStage.setResizable(false);
         LogInStage.setTitle("Bookstore(Log In)");
         LogInStage.show();
+
+    }
+    public static int log() {
+        int x = -2;
+        try {
+            x = LogInControls.checkLogIn(tfUsrN.getText(), tfPass.getText());
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        tfPass.clear();
+        tfUsrN.clear();
+        return x;
+
     }
 }
+
+
