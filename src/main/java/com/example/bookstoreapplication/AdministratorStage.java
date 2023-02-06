@@ -1,13 +1,13 @@
 package com.example.bookstoreapplication;
 
+import com.example.bookstoreapplication.Controls.BookControls;
 import com.example.bookstoreapplication.Models.Book;
 import com.example.bookstoreapplication.Models.Librarian;
 import com.example.bookstoreapplication.Models.Person;
+import com.example.bookstoreapplication.NoHeader.NoHeader;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -21,26 +21,14 @@ public class AdministratorStage extends Application {
     public static TableView AllEmp = new TableView<>();
     public static ArrayList Employees = new ArrayList<>();
     public static ArrayList toBeDeleted = new ArrayList<>();
-
+    public static Button btAdd= new Button("Add Employee");
+    public  static ArrayList newEmp= new ArrayList<>();
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        FileOutputStream fOutput = new FileOutputStream("src/main/resources/Employee.dat");
-        ObjectOutputStream Output = new ObjectOutputStream(fOutput);
-        Date date = null;
-        Output.writeObject(new Librarian("Lali","Lali",date,"0697722030",3,"Lali@gmail.com"));
-        Output.writeObject(new Librarian("Keli","Lali",date,"0697722030",6,"Lali@gmail.com"));
-System.out.print(toBeDeleted);
-        getAllEmp();
-        Stage x= deleteEmployee();
-        x.show();
-    }
-
-    public Stage deleteEmployee() {
-
         Stage stage = new Stage();
 
         TableColumn<Librarian, String> NameCol = new TableColumn<Librarian, String>("Name");
@@ -58,9 +46,7 @@ System.out.print(toBeDeleted);
         }
         AllEmp.setOnMouseClicked(e -> {
             toBeDeleted.add((Librarian) AllEmp.getSelectionModel().getSelectedItem());
-
         });
-
         DeleteEmp.setOnAction(e->{
             try {
                 try {
@@ -80,8 +66,88 @@ System.out.print(toBeDeleted);
 
         stage.setScene(scene);
 
-        return stage;
     }
+public static GridPane addingEmpPane(){
+
+        GridPane AddPane= new GridPane();
+        TextField tfName = new TextField();
+    tfName.setPromptText("Name");
+    TextField tfSurname = new TextField();
+    tfSurname.setPromptText("Surname");
+    TextField tfPhoneNumber = new TextField();
+    tfPhoneNumber.setPromptText("Phone Number");
+    TextField tfEmail = new TextField();
+    tfEmail.setPromptText("Email");
+    TextField tfLibrarianID = new TextField();
+    tfLibrarianID.setPromptText("LibrarianID");
+    TextField tfSalary = new TextField();
+    tfSalary.setPromptText("Salary");
+    TextField tfUsername = new TextField();
+    tfUsername.setPromptText("Username");
+    TextField tfPassword = new TextField();
+    tfPassword.setPromptText("Password");
+    TextField tfBirthdate = new TextField();
+    tfBirthdate.setPromptText("Birthdate");
+    TextField tfsearchEmp = new TextField();
+    tfsearchEmp.setPrefWidth(500);
+    tfsearchEmp.setPromptText("\t\t\t\t\t\t\t Enter Name/Surname/LibrarianID/Username");
+    btAdd.setOnAction(k -> {
+        try {
+            addNewEmp(tfName.getText(),
+                    tfSurname.getText(),
+                    new Date(),
+                    tfPhoneNumber.getText(),
+                    Integer.parseInt(tfLibrarianID.getText()),
+                    tfEmail.getText(),
+                    tfPassword.getText(),
+                    tfUsername.getText(),
+                    Integer.parseInt(tfSalary.getText()));
+        } catch (IOException | ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+                tfName.clear();
+                tfSurname.clear();
+                tfPhoneNumber.clear();
+                tfBirthdate.clear();
+                tfEmail.clear();
+                tfLibrarianID.clear();
+                tfPhoneNumber.clear();
+                tfUsername.clear();
+                tfPassword.clear();
+                tfsearchEmp.clear();
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    //Labels
+    Label lbTitle = new Label("Name:");
+    Label lbAuthor = new Label("Surname:");
+    Label lbCategory = new Label("LibrarianID:");
+    Label lbQuantity = new Label("Email:");
+    Label lbISBN = new Label("Username:");
+    Label lbSupplier = new Label("Password:");
+    Label lbPurchasePrice = new Label("Salary");
+    Label lbSellPrice = new Label("BirthDate:");
+    Label lbOrgPrice = new Label("Phone Number:");
+
+
+
+
+    return AddPane;
+    }
+
+
 
     public static void deleteEmp() throws IOException, ClassNotFoundException {
         try (FileOutputStream fOutput = new FileOutputStream("src/main/resources/Employee.dat");
@@ -114,7 +180,6 @@ System.out.print(toBeDeleted);
             System.out.print(A);
         }
     }
-
     public static void getAllEmp() throws IOException, ClassNotFoundException {
         try (
              FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
@@ -132,5 +197,33 @@ System.out.print(toBeDeleted);
         }
     }
 
+    public static void addNewEmp(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username, String Password,int Salary) throws IOException, ClassNotFoundException {
+        boolean found = false;
+        if (!((new File("src/main/resources/Employee.dat")).exists())) {
+            try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"));
+                 FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat")
+            ) {
 
-}
+                Librarian newLibrarian = new Librarian(name,surname,date,phoneNumber,ID,email,Username,Password,Salary);
+                output.writeObject(newLibrarian);
+
+                found = true;
+            }
+        } else {
+            try (NoHeader noHeader = new NoHeader(new FileOutputStream("src/main/resources/Librarian.dat", true));) {
+            Librarian newLib = new Librarian(name,surname,date,phoneNumber,ID,email,Username,Password,Salary);
+            noHeader.writeObject(newLib);
+
+            }
+
+
+            }
+        }
+    }
+
+
+
+
+
+
+

@@ -20,8 +20,9 @@ public class Librarian extends Person implements Serializable {
         this.librarianID = ID;
     }
 
-    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email) {
-        super(name, surname, date, role.LIBRARIAN);
+    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username,String Password, int Salary) {
+        super(name, surname, date, role.LIBRARIAN,Username,Password);
+        this.salary=Salary;
         this.librarianID = ID;
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
