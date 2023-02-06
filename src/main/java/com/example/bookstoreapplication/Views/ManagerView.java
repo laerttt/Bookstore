@@ -392,7 +392,7 @@ public class ManagerView extends Application {
         bPane.setCenter(info);
         BorderPane.setAlignment(info,Pos.CENTER);
         bPane.setBottom(close);
-        BorderPane.setAlignment(close,Pos.CENTER_RIGHT);
+        BorderPane.setAlignment(close,Pos.BOTTOM_RIGHT);
 
         //actions
         close.setOnAction(e -> stage.close());

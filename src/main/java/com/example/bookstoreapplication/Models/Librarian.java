@@ -11,10 +11,12 @@ public class Librarian extends Person implements Serializable {
 
     private int salary;
     private int librarianID;
-    public Librarian(){
+
+    public Librarian() {
         super();
 
     }
+
     public Librarian(String name, String surname, Date date, int ID) {
         super(name, surname, date, role.LIBRARIAN);
         this.librarianID = ID;
@@ -32,10 +34,12 @@ public class Librarian extends Person implements Serializable {
     public String getUserName() {
         return super.userName;
     }
+
     @Override
     public String getPassword() {
         return super.password;
     }
+
     @Override
     public String getEmail() {
         return super.email;
@@ -44,6 +48,7 @@ public class Librarian extends Person implements Serializable {
     public int getLibrarianID() {
         return this.librarianID;
     }
+
     @Override
     public String getPhoneNumber() {
         return super.phoneNumber;
@@ -67,6 +72,7 @@ public class Librarian extends Person implements Serializable {
     protected Date getBirthDate() {
         return super.birthDate;
     }
+
     @Override
     public int getAccessLevel() {
         return super.accessLevel;
@@ -117,19 +123,15 @@ public class Librarian extends Person implements Serializable {
     protected void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;
     }
+
     @Override
     public void setUserName(String userName) {
         super.userName = userName;
     }
+
     @Override
     public void setPassword(String password) {
         super.password = password;
     }
 
-
-
-    @Override
-    public String toString(){
-        return this.getName()+" "+this.getUserName()+" "+this.getPassword();
-    }
 }

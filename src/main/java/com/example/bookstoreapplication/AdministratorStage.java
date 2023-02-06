@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AdministratorStage extends Application {
-   Button DeleteEmp= new Button("Delte Selected Employees");
+   Button DeleteEmp= new Button("Delete Selected Employees");
     public static TableView AllEmp = new TableView<>();
     public static ArrayList Employees = new ArrayList<>();
     public static ArrayList toBeDeleted = new ArrayList<>();
@@ -28,12 +28,6 @@ public class AdministratorStage extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        FileOutputStream fOutput = new FileOutputStream("src/main/resources/Employee.dat");
-        ObjectOutputStream Output = new ObjectOutputStream(fOutput);
-        Date date = null;
-        Output.writeObject(new Librarian("Lali","Lali",date,"0697722030",3,"Lali@gmail.com"));
-        Output.writeObject(new Librarian("Keli","Lali",date,"0697722030",6,"Lali@gmail.com"));
-System.out.print(toBeDeleted);
         getAllEmp();
         Stage x= deleteEmployee();
         x.show();

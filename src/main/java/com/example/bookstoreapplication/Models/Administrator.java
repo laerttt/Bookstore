@@ -49,17 +49,17 @@ public class Administrator extends Person implements Serializable {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return super.name;
     }
 
     @Override
-    protected String getSurname() {
+    public String getSurname() {
         return super.surname;
     }
 
     @Override
-    protected Date getBirthDate() {
+    public Date getBirthDate() {
         return super.birthDate;
     }
 
@@ -100,17 +100,17 @@ public class Administrator extends Person implements Serializable {
     }
 
     @Override
-    protected void setName(String name) {
+    public void setName(String name) {
         super.name = name;
     }
 
     @Override
-    protected void setSurname(String surname) {
+    public void setSurname(String surname) {
         super.surname = surname;
     }
 
     @Override
-    protected void setBirthDate(Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;
     }
 

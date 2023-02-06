@@ -1,6 +1,8 @@
 package com.example.bookstoreapplication.Views;
 
+import com.example.bookstoreapplication.AdministratorStage;
 import com.example.bookstoreapplication.Controls.LogInControls;
+import com.example.bookstoreapplication.Models.Administrator;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -99,6 +101,15 @@ public class LogInWindow extends Application {
                         ManagerView l = new ManagerView();
                         try {
                             l.start(new Stage());
+                            LogInStage.close();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    case 3 ->{
+                        AdministratorStage a = new AdministratorStage();
+                        try {
+                            a.start(new Stage());
                             LogInStage.close();
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
