@@ -1,16 +1,13 @@
 package com.example.bookstoreapplication.Controls;
-import com.example.bookstoreapplication.Models.Bill;
 import com.example.bookstoreapplication.Models.Book;
 import com.example.bookstoreapplication.Models.Librarian;
 import com.example.bookstoreapplication.Models.Person;
+import com.example.bookstoreapplication.Views.LogInWindow;
 
 import java.io.*;
 import  java.util.ArrayList;
 import java.util.Date;
-import java.util.*;
 
-import static com.example.bookstoreapplication.Views.LogInWindow.tfPass;
-import static com.example.bookstoreapplication.Views.LogInWindow.tfUsrN;
 
 
 public class LibrarianControlls {
@@ -40,14 +37,9 @@ public static ArrayList<Book> Books = new ArrayList<>();
      * @throws ClassNotFoundException
      */
 
-    public static Bill getBill(ArrayList Books,int Price) throws IOException, ClassNotFoundException {
-      Bill A= new Bill(Books,date,getCurrentLib(),Price);
-      return A;
-    }
+
 
     public static int getCurrentLib() throws IOException, ClassNotFoundException {
-        String Username= tfUsrN.getText();
-        String Password= tfPass.getText();
         int LibId = 0;
 
         try (FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
@@ -57,9 +49,11 @@ public static ArrayList<Book> Books = new ArrayList<>();
                 Person A;
                 A = (Person)input.readObject();
                 if(A instanceof Librarian) {
-                    if (A.getUserName().contentEquals(Username)) {
-                        if (A.getPassword().contentEquals(Password)) {
-                            LibId =((Librarian)A).getLibrarianID();
+                    Librarian B = (Librarian) A;
+                    System.out.println(B.getLibrarianSearchProperties());
+                    if (B.getUserName().contentEquals(LogInWindow.user)) {
+                        if (B.getPassword().contentEquals(LogInWindow.pass)) {
+                            LibId = B.getLibrarianID();
                         }
 
                     }
@@ -68,5 +62,18 @@ public static ArrayList<Book> Books = new ArrayList<>();
             return LibId;
         }
     }
+    public static ArrayList getAllLibrarians() throws IOException, ClassNotFoundException {
+        ArrayList libs = new ArrayList<>();
+        try (FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
+             ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
 
+            while (fInput.available() > 0) {
+                Person A= (Person) input.readObject();
+                if((A) instanceof Librarian)
+                libs.add(A);
+            }
+        }
+        return libs;
+    }
 }

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import static com.example.bookstoreapplication.Controls.LibrarianControlls.*;
@@ -243,7 +244,7 @@ public class LibrarianStage extends Application {
         GridPane.setHalignment(ClearBill, HPos.CENTER);
         mainGrid.setVgap(5);
         mainGrid.setHgap(5);
-
+        System.out.println(getCurrentLib());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -267,24 +268,23 @@ public class LibrarianStage extends Application {
         if (((new File("src/main/resources/Bills.dat")).exists())) {
             try (NoHeader Output = new NoHeader(new FileOutputStream("src/main/resources/Bills.dat", true));
             ) {
-                Bill A = getBill(BillBooks, bookTotal());
+                Bill A = new Bill(BillBooks,new Date(),getCurrentLib() , bookTotal());
                 Output.writeObject(A);
                 BillsTable.getItems().clear();
                 for (Book i : BillBooks) {
                     BookControls.removeBook(i);
                 }
                 BillBooks.clear();
-                MainBill = A;
             }
-        } else {
+        }
+        else {
             try (FileOutputStream fOutput = new FileOutputStream("src/main/resources/Bills.dat");
-                 NoHeader Output = new NoHeader(fOutput);
+                 ObjectOutputStream Output = new ObjectOutputStream(fOutput);
             ) {
-                Bill A = getBill(BillBooks, bookTotal());
+                Bill A = new Bill(BillBooks,new Date(),getCurrentLib() , bookTotal());
                 Output.writeObject(A);
                 BillsTable.getItems().clear();
                 BillBooks.clear();
-                MainBill = A;
             }
         }
     }

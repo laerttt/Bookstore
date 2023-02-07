@@ -87,6 +87,10 @@ public class Librarian extends Person implements Serializable {
         return super.accessLevel;
     }
 
+    public String getLibrarianSearchProperties() {
+        return this.name + " " + this.surname + " " + this.librarianID;
+    }
+
     //setters
     @Override
     public void setEmail(String email) throws InputMismatchException {
@@ -103,11 +107,11 @@ public class Librarian extends Person implements Serializable {
             Button b = new Button("Close");
             b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
             BorderPane p = new BorderPane();
-            p.setPadding(new Insets(10,10,10,10));
+            p.setPadding(new Insets(10, 10, 10, 10));
             p.setBottom(b);
             p.setCenter(t);
             BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
-            Scene s = new Scene(p,220,100);
+            Scene s = new Scene(p, 220, 100);
             o.setScene(s);
             o.setResizable(false);
             o.initModality(Modality.APPLICATION_MODAL);
@@ -131,11 +135,11 @@ public class Librarian extends Person implements Serializable {
             Button b = new Button("Close");
             b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
             BorderPane p = new BorderPane();
-            p.setPadding(new Insets(10,10,10,10));
+            p.setPadding(new Insets(10, 10, 10, 10));
             p.setBottom(b);
             p.setCenter(t);
             BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
-            Scene s = new Scene(p,220,100);
+            Scene s = new Scene(p, 220, 100);
             o.setScene(s);
             o.setResizable(false);
             o.initModality(Modality.APPLICATION_MODAL);
@@ -143,6 +147,7 @@ public class Librarian extends Person implements Serializable {
             b.setOnAction(z -> o.close());
         }
     }
+
 
     public void setSalary(int salary) {
         this.salary = salary;
@@ -173,4 +178,8 @@ public class Librarian extends Person implements Serializable {
         super.password = password;
     }
 
+    public String getLibrarianProperties() {
+    return this.name+" "+this.surname+"\nLibrarian ID:\t"+this.librarianID+"\nE-Mail:\t"+this.email+
+            "\nPhone Number:\t"+this.phoneNumber;
+    }
 }

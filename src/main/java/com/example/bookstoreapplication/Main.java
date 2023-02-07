@@ -34,9 +34,11 @@ public class Main extends Application {
 //        Person m = new Manager("Manager","Manager",new Date());
 //        m.setUserName("man");
 //        m.setPassword("123");
-//        Person l = new Librarian("Librarian","Librarian",new Date(),1);
+//        Person l = new Librarian("Kelvin","Gjikola",new Date(),1);
 //        l.setUserName("lib");
 //        l.setPassword("123");
+//        ((Librarian) l).setEmail("darkrecon123@gmail.com");
+//        ((Librarian) l).setPhoneNumber("+355 69 77 22 030");
 //        try(ObjectOutputStream n = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"))){
 //            n.writeObject(a);
 //            n.writeObject(m);
@@ -52,6 +54,7 @@ public class Main extends Application {
 //            }
 //        }
 //        System.out.println(p);
+
         launch();
 //    }
     }

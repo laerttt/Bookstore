@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.util.EventListener;
 
 public class LogInWindow extends Application {
-    public static TextField tfUsrN = new TextField();
-    public static PasswordField tfPass = new PasswordField();
+    public static String user;
+    public static String pass;
     @Override
     public void start(Stage LogInStage) throws Exception {
         //stages
@@ -49,7 +49,8 @@ public class LogInWindow extends Application {
         warningText.setStyle("-fx-font-size: 15px;");
 
         //textFields
-
+        TextField tfUsrN = new TextField();
+        PasswordField tfPass = new PasswordField();
         tfUsrN.setPromptText("UserName");
         tfPass.setPromptText("Password");
 
@@ -63,7 +64,11 @@ public class LogInWindow extends Application {
         //events
         btcloseWarning.setOnAction(e->warningStage.close());
         btLogIn.setOnAction(e-> {
-            switch (log()){
+            user = tfUsrN.getText();
+            pass = tfPass.getText();
+            tfUsrN.clear();
+            tfPass.clear();
+            switch (log(user,pass)){
                 case 1 -> {LibrarianStage l = new LibrarianStage();
                     try {
                         l.start(new Stage());
@@ -86,8 +91,13 @@ public class LogInWindow extends Application {
             }
         });
         tfPass.setOnKeyPressed(e -> {
+
             if(e.getCode() == KeyCode.ENTER) {
-                switch (log()) {
+                user = tfUsrN.getText();
+                pass = tfPass.getText();
+                tfUsrN.clear();
+                tfPass.clear();
+                switch (log(user,pass)) {
                     case 1 -> {
                         LibrarianStage l = new LibrarianStage();
                         try {
@@ -147,15 +157,13 @@ public class LogInWindow extends Application {
         LogInStage.show();
 
     }
-    public static int log() {
+    public static int log(String u, String p) {
         int x = -2;
         try {
-            x = LogInControls.checkLogIn(tfUsrN.getText(), tfPass.getText());
+            x = LogInControls.checkLogIn(u, p);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        tfPass.clear();
-        tfUsrN.clear();
         return x;
 
     }
