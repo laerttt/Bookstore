@@ -1,5 +1,14 @@
 package com.example.bookstoreapplication.Models;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -11,18 +20,19 @@ public class Librarian extends Person implements Serializable {
 
     private int salary;
     private int librarianID;
-    public Librarian(){
+
+    public Librarian() {
         super();
 
     }
-    public Librarian(String name, String surname, Date date, int ID,String Username,String Password) {
-        super(name, surname, date, role.LIBRARIAN,Username,Password);
+
+    public Librarian(String name, String surname, Date date, int ID) {
+        super(name, surname, date, role.LIBRARIAN);
         this.librarianID = ID;
     }
 
-    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username,String Password, int Salary) {
-        super(name, surname, date, role.LIBRARIAN,Username,Password);
-        this.salary=Salary;
+    public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email) {
+        super(name, surname, date, role.LIBRARIAN);
         this.librarianID = ID;
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
@@ -33,10 +43,12 @@ public class Librarian extends Person implements Serializable {
     public String getUserName() {
         return super.userName;
     }
+
     @Override
     public String getPassword() {
         return super.password;
     }
+
     @Override
     public String getEmail() {
         return super.email;
@@ -45,6 +57,7 @@ public class Librarian extends Person implements Serializable {
     public int getLibrarianID() {
         return this.librarianID;
     }
+
     @Override
     public String getPhoneNumber() {
         return super.phoneNumber;
@@ -68,9 +81,14 @@ public class Librarian extends Person implements Serializable {
     protected Date getBirthDate() {
         return super.birthDate;
     }
+
     @Override
     public int getAccessLevel() {
         return super.accessLevel;
+    }
+
+    public String getLibrarianSearchProperties() {
+        return this.name + " " + this.surname + " " + this.librarianID;
     }
 
     //setters
@@ -83,7 +101,22 @@ public class Librarian extends Person implements Serializable {
                 throw new InputMismatchException();
             }
         } catch (InputMismatchException ex) {
-            System.out.print("Invalid Email Address");
+            Stage o = new Stage();
+            Text t = new Text("Invalid Email Address");
+            t.setStyle("-fx-font-size: 15px;");
+            Button b = new Button("Close");
+            b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+            BorderPane p = new BorderPane();
+            p.setPadding(new Insets(10, 10, 10, 10));
+            p.setBottom(b);
+            p.setCenter(t);
+            BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
+            Scene s = new Scene(p, 220, 100);
+            o.setScene(s);
+            o.setResizable(false);
+            o.initModality(Modality.APPLICATION_MODAL);
+            o.show();
+            b.setOnAction(z -> o.close());
         }
     }
 
@@ -96,9 +129,25 @@ public class Librarian extends Person implements Serializable {
                 throw new InputMismatchException();
             }
         } catch (InputMismatchException ex) {
-            System.out.print("Invalid Phone Number");
+            Stage o = new Stage();
+            Text t = new Text("Invalid Phone Number");
+            t.setStyle("-fx-font-size: 15px;");
+            Button b = new Button("Close");
+            b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+            BorderPane p = new BorderPane();
+            p.setPadding(new Insets(10, 10, 10, 10));
+            p.setBottom(b);
+            p.setCenter(t);
+            BorderPane.setAlignment(b, Pos.CENTER_RIGHT);
+            Scene s = new Scene(p, 220, 100);
+            o.setScene(s);
+            o.setResizable(false);
+            o.initModality(Modality.APPLICATION_MODAL);
+            o.show();
+            b.setOnAction(z -> o.close());
         }
     }
+
 
     public void setSalary(int salary) {
         this.salary = salary;
@@ -118,19 +167,19 @@ public class Librarian extends Person implements Serializable {
     protected void setBirthDate(Date birthDate) {
         super.birthDate = birthDate;
     }
+
     @Override
     public void setUserName(String userName) {
         super.userName = userName;
     }
+
     @Override
     public void setPassword(String password) {
         super.password = password;
     }
 
-
-
-    @Override
-    public String toString(){
-        return this.getName()+" "+this.getUserName()+" "+this.getPassword();
+    public String getLibrarianProperties() {
+    return this.name+" "+this.surname+"\nLibrarian ID: "+this.librarianID+"\nE-Mail:\t"+this.email+
+            "\nPhone Number:\t"+this.phoneNumber;
     }
 }

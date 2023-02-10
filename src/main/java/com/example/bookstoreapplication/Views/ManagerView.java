@@ -11,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -25,6 +27,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 public class ManagerView extends Application {
+    TableView<Book> bookTableView = new TableView<>();
     @Override
     public void start(Stage managerStage) throws Exception {
         //panes
@@ -43,7 +46,6 @@ public class ManagerView extends Application {
         Scene scene = new Scene(mainGridPane );
 
         //tableview
-        TableView<Book> bookTableView = new TableView<>();
         bookTableView.setPlaceholder(new Label("No books found."));
 
         //book tableView
@@ -51,8 +53,6 @@ public class ManagerView extends Application {
         bcolTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableColumn<Book, String> bcolAuthor = new TableColumn<>("Author");
         bcolAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
-        bcolAuthor.setMinWidth(100);
-        bcolAuthor.setMaxWidth(100);
         TableColumn<Book, Integer> bcolStock = new TableColumn<>("Stock");
         bcolStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         bcolStock.setMaxWidth(50);
@@ -67,16 +67,14 @@ public class ManagerView extends Application {
         bcolPrice.setMaxWidth(50);
         TableColumn<Book, Integer> bcolSellPrice = new TableColumn<>("Selling Price");
         bcolSellPrice.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
-        bcolSellPrice.setMinWidth(100);
-        bcolSellPrice.setMaxWidth(100);
+        bcolSellPrice.setMinWidth(80);
+        bcolSellPrice.setMaxWidth(80);
         TableColumn<Book, Integer> bcolOrgPrice = new TableColumn<>("Original Price");
         bcolOrgPrice.setCellValueFactory(new PropertyValueFactory<>("originalPrice"));
         bcolOrgPrice.setMinWidth(100);
         bcolOrgPrice.setMaxWidth(100);
         TableColumn<Book, String> bcolCategory = new TableColumn<>("Category");
         bcolCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        bcolCategory.setMaxWidth(80);
-        bcolCategory.setMinWidth(80);
         TableColumn<Book, String> bcolSupplier = new TableColumn<>("Supplier");
         bcolSupplier.setCellValueFactory(new PropertyValueFactory<>("supplier"));
         bcolSupplier.setMaxWidth(120);
@@ -87,10 +85,7 @@ public class ManagerView extends Application {
         bookTableView.setMaxHeight(375);
 
         //tableViewUp
-        ArrayList<Book> books = BookControls.getBooks();
-        for(Book book : books){
-            bookTableView.getItems().add(book);
-        }
+        bookTableView.getItems().addAll(BookControls.getBooks());
 
         //textFields
         TextField tfTitle = new TextField();
@@ -116,15 +111,21 @@ public class ManagerView extends Application {
             tfsearchBook.setPromptText("\t\t\t\t\t\t\t Enter Title / Author / ISBN / Supplier");
 
         //Labels
-        Label lbTitle = new Label("Title:");
-        Label lbAuthor = new Label("Author:");
-        Label lbCategory = new Label("Category:");
-        Label lbQuantity = new Label("Quantity:");
-        Label lbISBN = new Label("ISBN:");
+        Label lbTitle = new Label("*Title:");
+        Label lbAuthor = new Label("*Author:");
+        Label lbCategory = new Label("*Category:");
+        Label lbQuantity = new Label("*Quantity:");
+        Label lbISBN = new Label("*ISBN:");
         Label lbSupplier = new Label("Supplier:");
-        Label lbPurchasePrice = new Label("Purchased Price:");
-        Label lbSellPrice = new Label("Selling Price:");
-        Label lbOrgPrice = new Label("Original Price:");
+        Label lbPurchasePrice = new Label("*Purchased Price:");
+        Label lbSellPrice = new Label("*Selling Price:");
+        Label lbOrgPrice = new Label("*Original Price:");
+
+        //texts
+        Text text = new Text("* -> Necessary fields");
+        text.setFont(Font.font("Verdana", FontWeight.NORMAL, 13));
+        text.setUnderline(true);
+        text.setFill(Color.DARKRED);
 
         //buttons
         Button btCheck = new Button("Check Stock");
@@ -168,6 +169,7 @@ public class ManagerView extends Application {
         gridPane.add(tfSellPrice,1,8);
         gridPane.add(lbOrgPrice,0,9);
         gridPane.add(tfOrgPrice,1,9);
+        gridPane.add(text,0,10);
         gridPane.add(btAdd,1,10);
         gridPane.add(btLibrarians,0,11);
         gridPane.add(btStat,1,11);
@@ -180,8 +182,25 @@ public class ManagerView extends Application {
                         tfCategory.getText(),Integer.parseInt(tfQuantity.getText()),tfISBN.getText(),
                         tfSupplier.getText(),new Date(),Integer.parseInt(tfPurchasePrice.getText()),Integer.parseInt(tfOrgPrice.getText()),
                                 Integer.parseInt(tfSellPrice.getText()));
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
+            } catch (Exception ex) {
+                Stage o = new Stage();
+                Text t = new Text("Fill all  *  fields!!");
+                t.setStyle("-fx-font-size: 15px;");
+                Button b = new Button("Close");
+                b.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
+                BorderPane p = new BorderPane();
+                p.setPadding(new Insets(10,10,10,10));
+                p.setBottom(b);
+                p.setCenter(t);
+                BorderPane.setAlignment(b,Pos.CENTER_RIGHT);
+                Scene s = new Scene(p,220,100);
+                o.setScene(s);
+                o.initOwner(managerStage);
+                o.setResizable(false);
+                o.initModality(Modality.APPLICATION_MODAL);
+                o.show();
+
+                b.setOnAction(z -> o.close());
             }
             tfTitle.clear();
             tfAuthor.clear();
@@ -192,8 +211,9 @@ public class ManagerView extends Application {
             tfPurchasePrice.clear();
             tfSellPrice.clear();
             tfOrgPrice.clear();
+            tfsearchBook.clear();
             bookTableView.getItems().clear();
-//            ArrayList<Book> books = BookControls.getBooks();
+
             try {
                 bookTableView.getItems().addAll(BookControls.getBooks());
             } catch (IOException | ClassNotFoundException ex) {
@@ -201,7 +221,6 @@ public class ManagerView extends Application {
             }
         });
         btCheck.setOnAction(e -> {
-            ArrayList<Book> lowBooks;
             Stage test = lowStockStage();
             test.show();
         });
@@ -226,8 +245,11 @@ public class ManagerView extends Application {
         btClearSearch.setOnAction(e->{
             tfsearchBook.clear();
             bookTableView.getItems().clear();
-            for(Book book : books)
-                bookTableView.getItems().add(book);
+            try {
+                bookTableView.getItems().addAll(BookControls.getBooks());
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         btLogOut.setOnAction(e -> {
             LogInWindow L = new LogInWindow();
@@ -240,8 +262,12 @@ public class ManagerView extends Application {
         });
         bookTableView.setOnMouseClicked(e ->{
             if(e.getClickCount()==2){
-                Stage x = bookoInfo(bookTableView.getSelectionModel().getSelectedItem());
-                x.show();
+                try {
+                    Stage x = bookoInfo(bookTableView.getSelectionModel().getSelectedItem());
+                    x.show();
+                }catch(Exception ex){
+
+                }
             }
         });
         tfsearchBook.setOnKeyPressed(e->{
@@ -263,6 +289,7 @@ public class ManagerView extends Application {
                 }
             }
         });
+
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
@@ -308,11 +335,12 @@ public class ManagerView extends Application {
         }
 
         Label lbLowQuan = new Label("Quantity:");
+
         TextField tfLowQuan = new TextField();
         tfLowQuan.setPromptText("Quantity");
+
         Button btAddStock = new Button("Add Stock") ;
         btAddStock.setStyle("-fx-background-color: darkgreen;-fx-text-fill: white;");
-
         Button btLowClose = new Button("Close");
         btLowClose.setStyle("-fx-background-color: darkred;-fx-text-fill: white;");
 
@@ -325,6 +353,12 @@ public class ManagerView extends Application {
         BorderPane.setMargin(lowHBox, new Insets(5,0,0,0));
 
         btLowClose.setOnAction(e ->  { tableView.getItems().clear();
+            try {
+                bookTableView.getItems().clear();
+                bookTableView.getItems().addAll(BookControls.getBooks());
+            } catch (IOException | ClassNotFoundException ez) {
+                throw new RuntimeException(ez);
+            }
             tfLowQuan.clear();
             lowStockStage.close();});
         btAddStock.setOnAction(e -> {
@@ -352,15 +386,23 @@ public class ManagerView extends Application {
             }
             tfLowQuan.clear();
             tableView.getItems().clear();
-
             try {
                 tableView.getItems().addAll(BookControls.getLowStock());
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
+            } catch (IOException | ClassNotFoundException ez) {
+                throw new RuntimeException(ez);
             }
 
         });
+        tableView.setOnMouseClicked(e ->{
+            if(e.getClickCount()==2){
+                try {
+                    Stage x = bookoInfo(tableView.getSelectionModel().getSelectedItem());
+                    x.show();
+                }catch(Exception ex){
 
+                }
+            }
+        });
         tableView.setPlaceholder(new Label("All books are up on stock."));
         lowStockStage.initModality(Modality.APPLICATION_MODAL);
         lowStockStage.setTitle("Low Stock Books");
@@ -392,7 +434,7 @@ public class ManagerView extends Application {
         bPane.setCenter(info);
         BorderPane.setAlignment(info,Pos.CENTER);
         bPane.setBottom(close);
-        BorderPane.setAlignment(close,Pos.CENTER_RIGHT);
+        BorderPane.setAlignment(close,Pos.BOTTOM_RIGHT);
 
         //actions
         close.setOnAction(e -> stage.close());

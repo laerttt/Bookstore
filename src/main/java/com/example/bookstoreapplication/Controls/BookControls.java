@@ -20,7 +20,6 @@ public class BookControls {
         try (FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
              ObjectInputStream input = new ObjectInputStream(fInput)
         ) {
-            System.out.println(fInput.available());
             while (fInput.available() > 0) {
                 Book A;
                 A = (Book) input.readObject();
@@ -28,7 +27,6 @@ public class BookControls {
                     lowBooks.add(A);
             }
         }
-        System.out.println(lowBooks);
         return lowBooks;
     }
 
@@ -57,10 +55,8 @@ public class BookControls {
             try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"));
                  FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat")
             ) {
-                System.out.println(fInput.available());
                 Book newBook = new Book(Title, Author, Category, quantity, ISBN, Supplier, purchasedDate, purchasedPrice, originalPrice, sellingPrice);
                 output.writeObject(newBook);
-                System.out.println("try 1");
                 found = true;
             }
         } else {
@@ -126,7 +122,6 @@ public class BookControls {
                 books.add((Book) input.readObject());
             }
         }
-        System.out.println(books);
         return books;
     }
     public static void removeBook(Book book){
