@@ -24,6 +24,12 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        launch();
+        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"));
+        FileInputStream fInput = new FileInputStream("src/main/resources/Books.dat");
+        Book A =  new Book();
+        Book B = new Book();
+   output.writeObject(A);
+        output.writeObject(B);
+
     }
 }

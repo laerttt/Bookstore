@@ -15,8 +15,8 @@ public class Librarian extends Person implements Serializable {
         super();
 
     }
-    public Librarian(String name, String surname, Date date, int ID) {
-        super(name, surname, date, role.LIBRARIAN);
+    public Librarian(String name, String surname, Date date, int ID,String Username,String Password) {
+        super(name, surname, date, role.LIBRARIAN,Username,Password);
         this.librarianID = ID;
     }
 
