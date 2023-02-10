@@ -21,12 +21,12 @@ public class Administrator extends Person implements Serializable {
     public Administrator(){
         super();
     }
-    public Administrator(String name, String surname, Date date) {
-        super(name, surname, date, role.ADMINISTRATOR);
+    public Administrator(String name, String surname, Date date,String Username,String Password) {
+        super(name, surname, date, role.ADMINISTRATOR,Username,Password);
     }
 
-    public Administrator(String name, String surname, Date date, String phoneNumber, String email) {
-        super(name, surname, date, role.ADMINISTRATOR);
+    public Administrator(String name, String surname, Date date, String phoneNumber, String email,String Username,String Password) {
+        super(name, surname, date, role.ADMINISTRATOR,Username,Password);
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
     }

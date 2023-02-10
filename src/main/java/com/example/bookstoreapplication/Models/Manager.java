@@ -22,11 +22,11 @@ public class Manager extends Person implements Serializable {
     public Manager(){
         super();
     }
-    public Manager(String name, String surname, Date date) {
-        super(name, surname, date, role.MANAGER);
+    public Manager(String name, String surname, Date date,String Username,String Password) {
+        super(name, surname, date, role.MANAGER,Username,Password);
     }
-    public Manager(String name, String surname, Date date, String phoneNumber, String email, int salary){
-        super(name, surname, date, role.MANAGER);
+    public Manager(String name, String surname, Date date, String phoneNumber, String email, int salary,String Username,String Password){
+        super(name, surname, date, role.MANAGER,Username,Password);
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.salary = salary;

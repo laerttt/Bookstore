@@ -29,11 +29,14 @@ public abstract class Person implements Serializable {
      * @param date;
      * @param role;
      */
-    protected Person(String name, String surname, Date date, role role){
+    protected Person(String name, String surname, Date date, role role,String Username,String Password){
 
         this.name = name;
         this.surname = surname;
         this.birthDate = date;
+       this.userName=Username;
+       this.password= Password;
+
         switch(role){
             case LIBRARIAN -> this.accessLevel = 1;
             case MANAGER -> this.accessLevel = 2;
