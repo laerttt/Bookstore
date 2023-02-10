@@ -27,7 +27,6 @@ public static ArrayList<Book> Books = new ArrayList<>();
 
 
     static double getTotalPrice(){
-
        return totalPrice;
     }
     /**

@@ -179,7 +179,7 @@ public class Librarian extends Person implements Serializable {
     }
 
     public String getLibrarianProperties() {
-    return this.name+" "+this.surname+"\nLibrarian ID:\t"+this.librarianID+"\nE-Mail:\t"+this.email+
+    return this.name+" "+this.surname+"\nLibrarian ID: "+this.librarianID+"\nE-Mail:\t"+this.email+
             "\nPhone Number:\t"+this.phoneNumber;
     }
 }

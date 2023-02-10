@@ -39,10 +39,17 @@ public class Main extends Application {
 //        l.setPassword("123");
 //        ((Librarian) l).setEmail("darkrecon123@gmail.com");
 //        ((Librarian) l).setPhoneNumber("+355 69 77 22 030");
+//
+//        Person la = new Librarian("Laert","Huti",new Date(),2);
+//        la.setUserName("libL");
+//        la.setPassword("123");
+//        ((Librarian) la).setEmail("la2002ert@gmail.com");
+//        ((Librarian) la).setPhoneNumber("+355 67 63 54 803");
 //        try(ObjectOutputStream n = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"))){
 //            n.writeObject(a);
 //            n.writeObject(m);
 //            n.writeObject(l);
+//            n.writeObject(la);
 //        }
 //        ArrayList<Person> p = new ArrayList<>();
 //        try (FileInputStream finput = new FileInputStream("src/main/resources/Employee.dat");
@@ -54,7 +61,6 @@ public class Main extends Application {
 //            }
 //        }
 //        System.out.println(p);
-
         launch();
 //    }
     }

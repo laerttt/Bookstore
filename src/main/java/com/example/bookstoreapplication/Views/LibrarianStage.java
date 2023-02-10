@@ -14,6 +14,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -58,9 +60,11 @@ public class LibrarianStage extends Application {
         column2.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
         TableColumn<Book, Integer> column3 = new TableColumn<Book, Integer>("Selling Price");
         column3.setCellValueFactory(new PropertyValueFactory<Book, Integer>("sellingPrice"));
+        TableColumn<Book, Integer> colstock = new TableColumn<>("Stock");
+        colstock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         TableColumn<Book, String> Column4 = new TableColumn<Book, String>("ISBN");
         Column4.setCellValueFactory(new PropertyValueFactory<Book, String>("ISBN"));
-        BooksTable.getColumns().addAll(column1, column2, column3, Column4);
+        BooksTable.getColumns().addAll(column1, column2, column3,colstock, Column4);
 
         TableView BillsTable = new TableView<>();
         TableColumn<Book, String> billTitle = new TableColumn<Book, String>("Title");
@@ -109,12 +113,15 @@ public class LibrarianStage extends Application {
             lbTotal.setText("Total: 0");
         });
         btAdd.setOnAction(e -> {
-            if ((Book) BooksTable.getSelectionModel().getSelectedItem() != null) {
+            if ((Book) BooksTable.getSelectionModel().getSelectedItem() != null && ((Book) BooksTable.getSelectionModel().getSelectedItem()).getStock()>0) {
                 BillBooks.add((Book) BooksTable.getSelectionModel().getSelectedItem());
+                BillsTable.getItems().clear();
+                BillsTable.getItems().addAll(BillBooks);
             }
-            BillsTable.getItems().clear();
-            for (Book book : BillBooks)
-                BillsTable.getItems().add(book);
+            else{
+                Stage w = warning();
+                w.show();
+            }
             try {
                 lbTotal.setText("Total: " + String.valueOf(bookTotal()));
             } catch (IOException | ClassNotFoundException ex) {
@@ -244,7 +251,6 @@ public class LibrarianStage extends Application {
         GridPane.setHalignment(ClearBill, HPos.CENTER);
         mainGrid.setVgap(5);
         mainGrid.setHgap(5);
-        System.out.println(getCurrentLib());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -333,7 +339,43 @@ public class LibrarianStage extends Application {
         stage.show();
         return stage;
     }
+    public Stage warning(){
+        //stage
+        Stage stage = new Stage();
+
+        //Pane
+        BorderPane bPane = new BorderPane();
+
+        //Scene
+        Scene scene = new Scene(bPane,200,150);
+
+        //messageLabel
+        Text info = new Text("No book selected!\nor\nBook out of stock!");
+        info.setStyle("-fx-font-size: 16px;");
+        info.setTextAlignment(TextAlignment.CENTER);
+        //buttons
+        Button close = new Button("Close");
+        close.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
+
+        //arrangements
+        bPane.setPadding(new Insets(10));
+        bPane.setStyle("-fx-font-size: 15px;");
+        bPane.setCenter(info);
+        BorderPane.setAlignment(info,Pos.CENTER);
+        bPane.setBottom(close);
+        BorderPane.setAlignment(close,Pos.BOTTOM_RIGHT);
+
+        //actions
+        close.setOnAction(e -> stage.close());
+
+        stage.setTitle("Warning!");
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        return  stage;
+    }
 }
+
 
 
 

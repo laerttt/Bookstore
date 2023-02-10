@@ -3,7 +3,6 @@ package com.example.bookstoreapplication.Views;
 import com.example.bookstoreapplication.Controls.BillControls;
 import com.example.bookstoreapplication.Controls.LibrarianControlls;
 import com.example.bookstoreapplication.Models.Bill;
-import com.example.bookstoreapplication.Models.Book;
 import com.example.bookstoreapplication.Models.Librarian;
 import com.example.bookstoreapplication.Models.Person;
 import javafx.application.Application;
@@ -22,14 +21,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.reflect.Array;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class LibrarianStatistics extends Application {
+    ArrayList<Bill> librarianBills = new ArrayList<>();
     @Override
     public void start(Stage stage) throws Exception {
         //pane
@@ -95,8 +97,8 @@ public class LibrarianStatistics extends Application {
         Label lbBills = new Label("Bills Table");
         Text tTotal = new Text("Total:");
         tTotal.setStyle("-fx-font-size: 20px;");
-        Label lbDateFrom = new Label("From:");
-        Label lbDateTo = new Label("To:");
+        Label lbDateFrom = new Label("After:");
+        Label lbDateTo = new Label("Before:");
         Text tShowTot = new Text(String.valueOf(tablePrice(billTable)));
         tShowTot.setStyle("-fx-font-size: 40px;");
         //Buttons
@@ -158,11 +160,15 @@ public class LibrarianStatistics extends Application {
         });
         btClear.setOnAction(e->{
             libTable.getItems().clear();
+            billTable.getItems().clear();
+            librarianBills.clear();
             try {
                 libTable.getItems().addAll(LibrarianControlls.getAllLibrarians());
+                billTable.getItems().addAll(BillControls.getAllBills());
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
+            tShowTot.setText(String.valueOf(tablePrice(billTable)));
         });
         libTable.setOnMouseClicked(e->{
             if(e.getClickCount() == 2){
@@ -174,6 +180,25 @@ public class LibrarianStatistics extends Application {
 
                     }
                 }
+            }
+            if(e.getClickCount()==1){
+                billTable.getItems().clear();
+                librarianBills.clear();
+                dpFrom.getEditor().clear();
+                dpTo.getEditor().clear();
+                ArrayList<Bill> bills;
+                try {
+                    bills = new ArrayList<>(BillControls.getAllBills());
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                for(Bill bill : bills){
+                    if (bill.getLibrarianID() == ((Librarian)libTable.getSelectionModel().getSelectedItem()).getLibrarianID()){
+                        billTable.getItems().add(bill);
+                        librarianBills.add(bill);
+                    }
+                }
+                tShowTot.setText(String.valueOf(tablePrice(billTable)));
             }
         });
         billTable.setOnMouseClicked(e->{
@@ -187,7 +212,55 @@ public class LibrarianStatistics extends Application {
             }
         });
         btClose.setOnAction(e -> stage.close());
-        //arragnements
+        dpFrom.setOnAction(e -> {
+            billTable.getItems().clear();
+            if(!librarianBills.isEmpty()) {
+                for (Bill bill : librarianBills) {
+                    System.out.println(bill);
+                    try {
+                        System.out.println((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))));
+                        if ((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))) &&
+                                (bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            System.out.println("i");
+                            billTable.getItems().add(bill);
+                        }
+                    } catch (NullPointerException ex) {
+                        System.out.println("catch " + (bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))));
+                        if ((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    }
+                }
+            }
+            else{
+                ArrayList<Bill> bills = new ArrayList<>();
+                System.out.println(bills);
+                try {
+                    bills.addAll(BillControls.getAllBills());
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                for (Bill bill : bills) {
+                    System.out.println(bill);
+                    try {
+                        System.out.println((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))&&
+                                (bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))));
+                        if ((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))) &&
+                                (bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            System.out.println("i");
+                            billTable.getItems().add(bill);
+                        }
+                    } catch (NullPointerException ex) {
+                        System.out.println("catch " + (bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))));
+                        if ((bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    }
+                }
+            }
+        });
+
+        //arrangements
         topHBox.getChildren().addAll(tfSearch,btSearch,btClear);
         topGridPane.add(topHBox,0,0);
         topGridPane.add(lbEmployee,0,1);
@@ -231,7 +304,7 @@ public class LibrarianStatistics extends Application {
         BorderPane bPane = new BorderPane();
 
         //Scene
-        Scene scene = new Scene(bPane,300,200);
+        Scene scene = new Scene(bPane);
 
         //messageLabel
         Label info = new Label(lib.getLibrarianProperties());
@@ -251,7 +324,7 @@ public class LibrarianStatistics extends Application {
         //actions
         close.setOnAction(e -> stage.close());
 
-        stage.setTitle("Book Info");
+        stage.setTitle("Librarian Info");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
