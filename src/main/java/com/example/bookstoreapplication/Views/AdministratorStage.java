@@ -341,7 +341,7 @@ MainPane.setHgap(5);
 
             for(int i =0;i< Employees.size();i++) {
                 Librarian A= (Librarian) Employees.get(i);
-                if ((Pattern.compile(tfSearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getLibrarianProperty()).find())) {
+                if ((Pattern.compile(tfSearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getLibrarianProperties()).find())) {
                     searchedEmp.add(A);
 
                 }
@@ -396,7 +396,7 @@ MainPane.setHgap(5);
         Scene scene = new Scene(bPane);
 
         //messageLabel
-        Label info = new Label(lib.getLibrarianProperty());
+        Label info = new Label(lib.getLibrarianProperties());
 
         //buttons
         Button close = new Button("Close");
