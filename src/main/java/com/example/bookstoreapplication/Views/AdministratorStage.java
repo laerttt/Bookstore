@@ -2,10 +2,9 @@ package com.example.bookstoreapplication.Views;
 
 
 import com.example.bookstoreapplication.Models.Librarian;
+import com.example.bookstoreapplication.Models.Manager;
 import com.example.bookstoreapplication.Models.Person;
 import com.example.bookstoreapplication.NoHeader.NoHeader;
-import com.example.bookstoreapplication.Views.LogInWindow;
-import com.example.bookstoreapplication.Views.ManagerView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +23,9 @@ import java.util.regex.Pattern;
 public class AdministratorStage extends Application {
     Button btDelete = new Button("Delete Selected Employees");
     public static TableView AllEmp = new TableView<>();
-    public static ArrayList <Librarian> Employees = new ArrayList<>();
+    public static TableView tbChangeAccess = new TableView<>();
+    public static ArrayList <Person> AllEmployees = new ArrayList<>();
+    public static ArrayList <Librarian> Librarians = new ArrayList<>();
     public static Button btManagerView= new Button("Manager View");
     public static Button btLibrarianView =  new Button("Librarian View");
     public static Button btAdd = new Button("Add Employee");
@@ -54,8 +55,8 @@ public class AdministratorStage extends Application {
         AllEmp.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         AllEmp.setMinWidth(900);
         AllEmp.setMaxHeight(375);
-        for (int i = 0; i < Employees.size(); i++) {
-            AllEmp.getItems().add(Employees.get(i));
+        for (int i = 0; i < Librarians.size(); i++) {
+            AllEmp.getItems().add(Librarians.get(i));
         }
 // search bar modify
         search.setPrefWidth(400);
@@ -183,19 +184,19 @@ MainPane.setHgap(5);
             try {
                 Date Birthdate = new Date(datepicker.getValue().toEpochDay());
 
-                try (FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
-                     ObjectInputStream input = new ObjectInputStream(fInput)
-                ) {
-                    while (fInput.available() > 0) {
-                        Librarian A = (Librarian) input.readObject();
+
+                     for(int i=0;i<Librarians.size();i++){
+                        Librarian A= (Librarian) (Librarians.get(i));
                         if (A.getLibrarianID() == Integer.parseInt(tfLibrarianID.getText())){
                             Stage x = DuplicateInfo(1);
                             x.show();
+                            System.out.print("ID");
                             tfLibrarianID.clear();
                             break;
                         } else if (A.getUserName().contentEquals(tfUsername.getText())) {
                             Stage x = DuplicateInfo(2);
                             x.show();
+                            System.out.print("Username");
                             tfUsername.clear();
                             break;
                         } else {   addNewEmp(tfName.getText(),
@@ -218,19 +219,18 @@ MainPane.setHgap(5);
                             tfUsername.clear();
                             tfPassword.clear();
                             AllEmp.getItems().clear();
-                            for (int i = 0; i < Employees.size(); i++) {
-                                AllEmp.getItems().add(Employees.get(i));
+                            for (int j = 0; j < Librarians.size(); j++) {
+                                AllEmp.getItems().add(Librarians.get(j));
                             }
                             break;
                         }
 
                     }
-                }
+
 
             } catch (Exception ex) {
 
-                 Stage X= noAddedInfo();
-                X.show();
+                 throw new RuntimeException(ex);
 
             }
 
@@ -275,19 +275,19 @@ MainPane.setHgap(5);
 
     public static void deleteEmp(Librarian B) throws IOException {
 
-                for (int i = 0; i < Employees.size(); i++) {
-                    Librarian A = (Librarian) Employees.get(i);
+                for (int i = 0; i < Librarians.size(); i++) {
+                    Librarian A = (Librarian) Librarians.get(i);
                     if (A.getLibrarianID() == B.getLibrarianID()) {
 
-                        Employees.remove(A);
+                        Librarians.remove(A);
                     }
                 }
 
             FileOutputStream newOutput = new FileOutputStream("src/main/resources/Employee.dat");
             ObjectOutputStream newOut = new ObjectOutputStream(newOutput);
 
-            for (int i = 0; i < Employees.size(); i++) {
-                Librarian A =  (Employees.get(i));
+            for (int i = 0; i < Librarians.size(); i++) {
+                Librarian A =  (Librarians.get(i));
 
                 newOut.writeObject(A);
             }
@@ -305,7 +305,7 @@ MainPane.setHgap(5);
                 Person A = (Person) input.readObject();
                 if (A instanceof Librarian)
 
-                    Employees.add((Librarian) A);
+                    Librarians.add((Librarian) A);
 
             }
 
@@ -320,7 +320,7 @@ MainPane.setHgap(5);
             ) {
 
                 Librarian newLibrarian = new Librarian(name, surname, date, phoneNumber, ID, email, Username, Password, Salary);
-                Employees.add(newLibrarian);
+                Librarians.add(newLibrarian);
                 output.writeObject(newLibrarian);
 
 
@@ -329,7 +329,7 @@ MainPane.setHgap(5);
             try (NoHeader noHeader = new NoHeader(new FileOutputStream("src/main/resources/Employee.dat", true))) {
                 Librarian newLib = new Librarian(name, surname, date, phoneNumber, ID, email, Username, Password, Salary);
                 noHeader.writeObject(newLib);
-                Employees.add(newLib);
+                Librarians.add(newLib);
             }
 
 
@@ -339,8 +339,8 @@ MainPane.setHgap(5);
 
     public static ArrayList<Librarian> searchBt(TextField tfSearchBar) throws IOException, ClassNotFoundException {
 
-            for(int i =0;i< Employees.size();i++) {
-                Librarian A= (Librarian) Employees.get(i);
+            for(int i = 0; i< Librarians.size(); i++) {
+                Librarian A= (Librarian) Librarians.get(i);
                 if ((Pattern.compile(tfSearchBar.getText(), Pattern.CASE_INSENSITIVE).matcher(A.getLibrarianProperties()).find())) {
                     searchedEmp.add(A);
 
@@ -497,7 +497,7 @@ MainPane.setHgap(5);
                 X.show();
             }
             AllEmp.getItems().clear();
-            for (Librarian employee : Employees) {
+            for (Librarian employee : Librarians) {
                 AllEmp.getItems().add(employee);
             }
             newStage.close();
@@ -552,6 +552,72 @@ MainPane.setHgap(5);
         return newStage;
 
     }
+    public static Stage AccessDiff(Librarian Lib) throws IOException, ClassNotFoundException {
+        Stage AccessMod = new Stage();
+        ManagersAndLibrarians();
+        TableColumn<Person, String> NameCol = new TableColumn<Person, String>("Name");
+        NameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        TableColumn<Person, String> SurnCol = new TableColumn<Person, String>("Surname");
+        SurnCol.setCellValueFactory(new PropertyValueFactory<Person, String>("surname"));
+        TableColumn<Person, String> UserNameCol = new TableColumn<Person, String>("Username");
+        UserNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("userName"));
+        TableColumn<Person, Integer> Id = new TableColumn<Person, Integer>("LibrarianID");
+        Id.setCellValueFactory(new PropertyValueFactory<Person, Integer>("librarianID"));
+        tbChangeAccess.getColumns().addAll(NameCol, SurnCol, UserNameCol, Id);
+        tbChangeAccess.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tbChangeAccess.setMinWidth(900);
+        tbChangeAccess.setMaxHeight(375);
+        for (int i = 0; i < Librarians.size(); i++) {
+            tbChangeAccess.getItems().add(AllEmployees.get(i));
+        }
+
+
+        Button GiveManager = new Button("Give Manager Access");
+        Button GiveLib = new Button("Give Librarian Access");
+
+        GiveManager.setOnAction(l ->
+        {           Librarian Lali = (Librarian) tbChangeAccess.getSelectionModel().getSelectedItem();
+                 Lali.setManagerAccess(true);
+
+    });
+
+        GiveLib.setOnAction(l ->
+        {
+            try{
+                Manager Lali = (Manager) tbChangeAccess.getSelectionModel().getSelectedItem();
+                Lali.setHasLibrarianAccess(true);}
+
+            catch(Exception ex){
+
+
+        }
+
+
+
+
+
+        });
+
+
+   return AccessMod;
+
+    }
+    public static void ManagersAndLibrarians() throws IOException, ClassNotFoundException {
+        try (
+                FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
+                ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
+
+            while (fInput.available() > 0) {
+
+                Person A = (Person) input.readObject();
+                AllEmployees.add(A);
+
+            }
+
+        }
+    }
+
 }
 
 

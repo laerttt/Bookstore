@@ -17,7 +17,7 @@ import java.util.InputMismatchException;
 public class Librarian extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
-
+private boolean hasManagerAccess= false;
     private int salary;
     private int librarianID;
 
@@ -183,5 +183,14 @@ public class Librarian extends Person implements Serializable {
     public String getLibrarianProperties() {
     return this.name+" "+this.surname+"\nLibrarian ID: "+this.librarianID+"\nE-Mail:\t"+this.email+
             "\nPhone Number:\t"+this.phoneNumber;
+
     }
+    public boolean getManagerAccess(){
+        return hasManagerAccess;
+    }
+    public void setManagerAccess(boolean A){
+         hasManagerAccess=A;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.bookstoreapplication.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public abstract class Person implements Serializable {
     protected String email;
     protected String userName;
     protected String password;
+
     protected enum role{
         LIBRARIAN,
         MANAGER,
@@ -19,7 +21,8 @@ public abstract class Person implements Serializable {
     }
     protected int accessLevel = -1;
 
-
+    @Serial
+    private static final long serialVersionUID =  12345678;
     protected Person(){
     }
     /**

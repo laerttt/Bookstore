@@ -1,6 +1,6 @@
 package com.example.bookstoreapplication.Views;
 
-import com.example.bookstoreapplication.AdministratorStage;
+
 import com.example.bookstoreapplication.Controls.LogInControls;
 import com.example.bookstoreapplication.Models.Administrator;
 import javafx.application.Application;
