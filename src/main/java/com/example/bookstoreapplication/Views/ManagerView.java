@@ -289,7 +289,14 @@ public class ManagerView extends Application {
                 }
             }
         });
-
+        btLibrarians.setOnAction(e->{
+            LibrarianStatistics l = new LibrarianStatistics();
+            try {
+                l.start(new Stage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
@@ -403,6 +410,7 @@ public class ManagerView extends Application {
                 }
             }
         });
+
         tableView.setPlaceholder(new Label("All books are up on stock."));
         lowStockStage.initModality(Modality.APPLICATION_MODAL);
         lowStockStage.setTitle("Low Stock Books");

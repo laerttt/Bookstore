@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Main extends Application {
     @Override
@@ -20,7 +21,6 @@ public class Main extends Application {
             throw new RuntimeException(e);
         }
     }
-
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 //        try(ObjectOutputStream n = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"))){
 //            for(int i=1;i<10;i++)
@@ -28,23 +28,15 @@ public class Main extends Application {
 //                        20,String.valueOf((long)(100*((Math.random()+1)*1000000000))),
 //                        "Supplier "+i,new Date(),500,700,1000));
 //        }
-//        Person a = new Administrator("Admin","Admin",new Date());
-//        a.setUserName("admin");
-//        a.setPassword("123");
-//        Person m = new Manager("Manager","Manager",new Date());
-//        m.setUserName("man");
-//        m.setPassword("123");
-//        Person l = new Librarian("Kelvin","Gjikola",new Date(),1);
-//        l.setUserName("lib");
-//        l.setPassword("123");
+//        Person a = new Administrator("Admin","Admin",new Date(),"admin","123");
+//        Person m = new Manager("Manager","Manager",new Date(), "manager", "123");
+//        Person l = new Librarian("Kelvin","Gjikola",new Date(),1,"lib","123");
 //        ((Librarian) l).setEmail("darkrecon123@gmail.com");
 //        ((Librarian) l).setPhoneNumber("+355 69 77 22 030");
-//
-//        Person la = new Librarian("Laert","Huti",new Date(),2);
-//        la.setUserName("libL");
-//        la.setPassword("123");
+//        Person la = new Librarian("Laert","Huti",new Date(),2,"libL","123");
 //        ((Librarian) la).setEmail("la2002ert@gmail.com");
 //        ((Librarian) la).setPhoneNumber("+355 67 63 54 803");
+//
 //        try(ObjectOutputStream n = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"))){
 //            n.writeObject(a);
 //            n.writeObject(m);
@@ -61,7 +53,16 @@ public class Main extends Application {
 //            }
 //        }
 //        System.out.println(p);
-        launch();
+//        try(
+//        ObjectOutputStream onput = new ObjectOutputStream(new FileOutputStream("src/main/resources/Books.dat"))){
+//            File file = new File("/Users/turtleneckdaddy/PC/Libra.txt");
+//            Scanner input = new Scanner(file);
+//            while(input.hasNextLine()){
+//                onput.writeObject(new Book(input.nextLine(), input.nextLine(), 1000));
+//            }
+//        }
+//        System.out.println("oke");
+//        launch();
 //    }
     }
 }

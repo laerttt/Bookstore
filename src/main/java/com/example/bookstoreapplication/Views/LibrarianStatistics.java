@@ -101,6 +101,7 @@ public class LibrarianStatistics extends Application {
         Label lbDateTo = new Label("Before:");
         Text tShowTot = new Text(String.valueOf(tablePrice(billTable)));
         tShowTot.setStyle("-fx-font-size: 40px;");
+
         //Buttons
         Button btClose = new Button("Close");
         btClose.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
@@ -172,13 +173,10 @@ public class LibrarianStatistics extends Application {
         });
         libTable.setOnMouseClicked(e->{
             if(e.getClickCount() == 2){
-                if(e.getClickCount()==2){
-                    try {
-                        Stage x = libInfo((Librarian) libTable.getSelectionModel().getSelectedItem());
-                        x.show();
-                    }catch(Exception ex){
-
-                    }
+                try {
+                    Stage x = libInfo((Librarian) libTable.getSelectionModel().getSelectedItem());
+                    x.show();
+                }catch(Exception ex){
                 }
             }
             if(e.getClickCount()==1){
@@ -258,6 +256,45 @@ public class LibrarianStatistics extends Application {
                     }
                 }
             }
+            tShowTot.setText(String.valueOf(tablePrice(billTable)));
+        });
+        dpTo.setOnAction(e -> {
+            billTable.getItems().clear();
+            if(!librarianBills.isEmpty()) {
+                for (Bill bill : librarianBills) {
+                    try {
+                        if ((bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))) &&
+                                (bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    } catch (NullPointerException ex) {
+                        if ((bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    }
+                }
+            }
+            else{
+                ArrayList<Bill> bills = new ArrayList<>();
+                try {
+                    bills.addAll(BillControls.getAllBills());
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                for (Bill bill : bills) {
+                    try {
+                        if ((bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))) &&
+                                (bill.getDate()).after(new Date(dpFrom.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    } catch (NullPointerException ex) {
+                        if ((bill.getDate()).before(new Date(dpTo.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))))) {
+                            billTable.getItems().add(bill);
+                        }
+                    }
+                }
+            }
+            tShowTot.setText(String.valueOf(tablePrice(billTable)));
         });
 
         //arrangements
@@ -293,6 +330,8 @@ public class LibrarianStatistics extends Application {
 
         stage.setTitle("Librarian Statistics");
         stage.setScene(scene);
+//        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
         stage.show();
 
     }

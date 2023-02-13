@@ -110,6 +110,12 @@ public class LibrarianStage extends Application {
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            BooksTable.getItems().clear();
+            try {
+                BooksTable.getItems().addAll(BookControls.getBooks());
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             lbTotal.setText("Total: 0");
         });
         btAdd.setOnAction(e -> {
@@ -219,6 +225,7 @@ public class LibrarianStage extends Application {
             }
             primaryStage.close();
         });
+
         //style
         BooksTable.setPrefWidth(500);
         BooksTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

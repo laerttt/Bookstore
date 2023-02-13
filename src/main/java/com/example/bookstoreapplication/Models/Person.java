@@ -1,9 +1,12 @@
 package com.example.bookstoreapplication.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 public abstract class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 12345678;
     protected String name;
     protected String surname;
     protected Date birthDate;
