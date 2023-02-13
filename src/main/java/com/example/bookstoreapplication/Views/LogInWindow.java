@@ -1,9 +1,6 @@
 package com.example.bookstoreapplication.Views;
 
 import com.example.bookstoreapplication.Controls.LogInControls;
-import com.example.bookstoreapplication.Models.Librarian;
-import com.example.bookstoreapplication.Models.Manager;
-import com.example.bookstoreapplication.Models.Person;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -19,10 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 public class LogInWindow extends Application {
     public static String user;

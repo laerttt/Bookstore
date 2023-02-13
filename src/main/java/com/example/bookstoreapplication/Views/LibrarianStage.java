@@ -7,8 +7,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
-import javafx.geometry.VPos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.application.Application;

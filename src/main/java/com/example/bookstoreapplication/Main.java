@@ -1,15 +1,9 @@
 package com.example.bookstoreapplication;
 
-import com.example.bookstoreapplication.Controls.BookControls;
-import com.example.bookstoreapplication.Models.*;
-import com.example.bookstoreapplication.NoHeader.NoHeader;
 import com.example.bookstoreapplication.Views.LogInWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
 
 public class Main extends Application {
     @Override
