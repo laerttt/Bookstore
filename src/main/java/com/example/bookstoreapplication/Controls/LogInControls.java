@@ -1,5 +1,6 @@
 package com.example.bookstoreapplication.Controls;
 import com.example.bookstoreapplication.Models.*;
+import com.example.bookstoreapplication.Views.LogInWindow;
 
 import java.io.*;
 
@@ -26,5 +27,41 @@ public class LogInControls {
                 }
             return -1;
         }
+    }
+    public static boolean checkAccess() throws IOException, ClassNotFoundException {
+        try (FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
+             ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
+            while (fInput.available() > 0) {
+                Person A;
+                A = (Person)input.readObject();
+                if(A instanceof Librarian) {
+                    Librarian B = (Librarian) A;
+                    if (B.getUserName().contentEquals(LogInWindow.user)) {
+                        if (B.getPassword().contentEquals(LogInWindow.pass)) {
+                            return B.getHasManagerAccess();
+                        }
+
+                    }
+                }
+                if(A instanceof Manager){
+                    Manager B = (Manager) A;
+                    if (B.getUserName().contentEquals(LogInWindow.user)) {
+                        if (B.getPassword().contentEquals(LogInWindow.pass)) {
+                            return B.getHasLibrarianAccess();
+                        }
+                    }
+                }
+                if(A instanceof Administrator) {
+                    Administrator B = (Administrator) A;
+                    if (B.getUserName().contentEquals(LogInWindow.user)) {
+                        if (B.getPassword().contentEquals(LogInWindow.pass)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

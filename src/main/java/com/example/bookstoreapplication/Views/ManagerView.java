@@ -1,7 +1,11 @@
 package com.example.bookstoreapplication.Views;
 
 import com.example.bookstoreapplication.Controls.BookControls;
+import com.example.bookstoreapplication.Controls.LogInControls;
 import com.example.bookstoreapplication.Models.Book;
+import com.example.bookstoreapplication.Models.Librarian;
+import com.example.bookstoreapplication.Models.Manager;
+import com.example.bookstoreapplication.Models.Person;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -140,7 +144,8 @@ public class ManagerView extends Application {
             GridPane.setHalignment(btLogOut, HPos.RIGHT);
         Button bttitleSearch = new Button("Search");
         Button btClearSearch = new Button("Clear");
-
+        Button btLibStage = new Button("Librarian Mode");
+            btLibStage.setStyle("-fx-background-color: blue;-fx-text-fill: white;");
         //styling
         mainGridPane.setPadding(new Insets(10,10,10,10));
         mainGridPane.add(gridPane,0,0);
@@ -148,6 +153,8 @@ public class ManagerView extends Application {
         rightSearchTView.getChildren().addAll(search,bookTableView);
         rightSearchTView.setSpacing(5);
         search.getChildren().addAll(tfsearchBook,bttitleSearch, btClearSearch);
+        if(LogInControls.checkAccess())
+            search.getChildren().add(btLibStage);
         search.setAlignment(Pos.CENTER);
         search.setSpacing(5);
         gridPane.add(btCheck,0,0);
@@ -297,9 +304,22 @@ public class ManagerView extends Application {
                 throw new RuntimeException(ex);
             }
         });
+        btLibStage.setOnAction(e->{
+            LibrarianStage L = new LibrarianStage();
+            try {
+                L.start(new Stage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            managerStage.close();
+        });
+
+
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
+        System.out.println(LogInWindow.user);
+        System.out.println(LogInWindow.pass);
         managerStage.show();
     }
     public Stage lowStockStage(){
@@ -453,4 +473,5 @@ public class ManagerView extends Application {
         stage.setResizable(false);
         return  stage;
     }
+
 }

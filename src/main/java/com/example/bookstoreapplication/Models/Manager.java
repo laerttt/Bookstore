@@ -17,16 +17,19 @@ import java.util.InputMismatchException;
 public class Manager extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
-
+    private boolean hasLibrarianAccess;
     private int salary;
     public Manager(){
         super();
+        hasLibrarianAccess = false;
     }
     public Manager(String name, String surname, Date date,String Username,String Password) {
         super(name, surname, date, role.MANAGER,Username,Password);
+        hasLibrarianAccess = false;
     }
     public Manager(String name, String surname, Date date, String phoneNumber, String email, int salary,String Username,String Password){
         super(name, surname, date, role.MANAGER,Username,Password);
+        hasLibrarianAccess = false;
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.salary = salary;
@@ -34,6 +37,9 @@ public class Manager extends Person implements Serializable {
 
 
     //getters
+    public boolean getHasLibrarianAccess(){
+        return this.hasLibrarianAccess;
+    }
     public int getSalary(){
         return this.salary;
     }
@@ -76,6 +82,9 @@ public class Manager extends Person implements Serializable {
 
 
     //setters
+    public void setHasLibrarianAccess(boolean x){
+        this.hasLibrarianAccess = x;
+    }
     public void setSalary(int salary){
         this.salary = salary;
     }

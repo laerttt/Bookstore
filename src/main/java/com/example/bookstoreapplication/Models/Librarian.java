@@ -17,18 +17,19 @@ import java.util.InputMismatchException;
 public class Librarian extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
-
+    private boolean hasManagerAccess;
     private int salary;
     private int librarianID;
 
     public Librarian() {
         super();
-
+        hasManagerAccess=false;
     }
 
     public Librarian(String name, String surname, Date date, int ID,String Username,String Password) {
         super(name, surname, date, role.LIBRARIAN,Username,Password);
         this.librarianID = ID;
+        hasManagerAccess=false;
     }
 
     public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username,String Password, int Salary) {
@@ -37,10 +38,14 @@ public class Librarian extends Person implements Serializable {
         this.librarianID = ID;
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
+        hasManagerAccess=false;
     }
 
 
     //getters
+    public boolean getHasManagerAccess(){
+        return this.hasManagerAccess;
+    }
     @Override
     public String getUserName() {
         return super.userName;
@@ -94,6 +99,9 @@ public class Librarian extends Person implements Serializable {
     }
 
     //setters
+    public void setHasManagerAccess(boolean x){
+        this.hasManagerAccess = x;
+    }
     @Override
     public void setEmail(String email) throws InputMismatchException {
         try {                            //if the number entered matches the albanian number tamplate

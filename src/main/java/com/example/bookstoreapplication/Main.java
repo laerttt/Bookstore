@@ -36,12 +36,17 @@ public class Main extends Application {
 //        Person la = new Librarian("Laert","Huti",new Date(),2,"libL","123");
 //        ((Librarian) la).setEmail("la2002ert@gmail.com");
 //        ((Librarian) la).setPhoneNumber("+355 67 63 54 803");
-//
+//        Manager Z = new Manager("manWP","manWP",new Date(), "managerWP", "123");
+//            Z.setHasLibrarianAccess(true);
+//        Librarian X = new Librarian("libWP","libWP",new Date(),3,"libWP","123");
+//          X.setHasManagerAccess(true);
 //        try(ObjectOutputStream n = new ObjectOutputStream(new FileOutputStream("src/main/resources/Employee.dat"))){
 //            n.writeObject(a);
 //            n.writeObject(m);
 //            n.writeObject(l);
 //            n.writeObject(la);
+//            n.writeObject(Z);
+//            n.writeObject(X);
 //        }
 //        ArrayList<Person> p = new ArrayList<>();
 //        try (FileInputStream finput = new FileInputStream("src/main/resources/Employee.dat");
@@ -62,7 +67,10 @@ public class Main extends Application {
 //            }
 //        }
 //        System.out.println("oke");
-//        launch();
+//        try(NoHeader output = new NoHeader(new FileOutputStream("src/main/resources/Employee.dat"))){
+//
+//        }
+        launch();
 //    }
     }
 }
