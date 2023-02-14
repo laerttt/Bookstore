@@ -1,6 +1,7 @@
 package com.example.bookstoreapplication.Views;
 
 
+import com.example.bookstoreapplication.Models.Administrator;
 import com.example.bookstoreapplication.Models.Librarian;
 import com.example.bookstoreapplication.Models.Manager;
 import com.example.bookstoreapplication.Models.Person;
@@ -23,8 +24,11 @@ import java.util.regex.Pattern;
 public class AdministratorStage extends Application {
     Button btDelete = new Button("Delete Selected Employees");
     public static TableView AllEmp = new TableView<>();
-    public static TableView tbChangeAccess = new TableView<>();
-    public static ArrayList <Person> AllEmployees = new ArrayList<>();
+    public static TableView tbChangeAccessLib = new TableView<>();
+    public static TableView tbChangeAccessMan = new TableView<>();
+    public static ArrayList <Administrator> Admin = new ArrayList<>();
+    public static Button AccessModififer= new Button("Change Employee access");
+    public static ArrayList <Manager> Managers = new ArrayList<>();
     public static ArrayList <Librarian> Librarians = new ArrayList<>();
     public static Button btManagerView= new Button("Manager View");
     public static Button btLibrarianView =  new Button("Librarian View");
@@ -37,8 +41,9 @@ public class AdministratorStage extends Application {
     @Override
     public void start(Stage AdminStage) throws IOException, ClassNotFoundException {
 
-        getAllEmp();
-
+        getAllLib();
+        getAdmin();
+        getManager();
        //Table Creation
 
         TableColumn<Librarian, String> NameCol = new TableColumn<Librarian, String>("Name");
@@ -111,6 +116,21 @@ public class AdministratorStage extends Application {
             }
         });
 
+        AccessModififer.setOnAction(e -> {
+
+       tbChangeAccessMan.getItems().clear();
+       tbChangeAccessLib.getItems().clear();
+            try {
+                Stage X = AccessDiff();
+           X.show();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        });
       // all search bar ribbon
         HBox searchBar = new HBox();
         searchBar.getChildren().add(search);
@@ -131,6 +151,7 @@ public class AdministratorStage extends Application {
        LeftSideAdder.getChildren().add(btLibrarianView);
         LeftSideAdder.getChildren().add(btManagerView);
         LeftSideAdder.getChildren().add(addingEmpPane());
+        LeftSideAdder.getChildren().add(AccessModififer);
         LeftSideAdder.setAlignment(Pos.CENTER);
         LeftSideAdder.setSpacing(5);
         // Table Pane ===> pane with table and all nodes that have the need for table
@@ -230,7 +251,8 @@ MainPane.setHgap(5);
 
             } catch (Exception ex) {
 
-                 throw new RuntimeException(ex);
+                 Stage X = noAddedInfo();
+                 X.show();
 
             }
 
@@ -291,10 +313,17 @@ MainPane.setHgap(5);
 
                 newOut.writeObject(A);
             }
-
+            for(int i = 0; i < Admin.size(); i++){
+                Administrator A = (Administrator) Admin.get(i);
+                newOut.writeObject(A);
+            }
+        for(int i = 0; i < Managers.size(); i++){
+            Manager A = (Manager) Managers.get(i);
+            newOut.writeObject(A);
+        }
     }
 
-    public static void getAllEmp() throws IOException, ClassNotFoundException {
+    public static void getAllLib() throws IOException, ClassNotFoundException {
         try (
                 FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
                 ObjectInputStream input = new ObjectInputStream(fInput)
@@ -552,23 +581,42 @@ MainPane.setHgap(5);
         return newStage;
 
     }
-    public static Stage AccessDiff(Librarian Lib) throws IOException, ClassNotFoundException {
+    public static Stage AccessDiff() throws IOException, ClassNotFoundException {
         Stage AccessMod = new Stage();
-        ManagersAndLibrarians();
-        TableColumn<Person, String> NameCol = new TableColumn<Person, String>("Name");
-        NameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
-        TableColumn<Person, String> SurnCol = new TableColumn<Person, String>("Surname");
-        SurnCol.setCellValueFactory(new PropertyValueFactory<Person, String>("surname"));
-        TableColumn<Person, String> UserNameCol = new TableColumn<Person, String>("Username");
-        UserNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("userName"));
-        TableColumn<Person, Integer> Id = new TableColumn<Person, Integer>("LibrarianID");
-        Id.setCellValueFactory(new PropertyValueFactory<Person, Integer>("librarianID"));
-        tbChangeAccess.getColumns().addAll(NameCol, SurnCol, UserNameCol, Id);
-        tbChangeAccess.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tbChangeAccess.setMinWidth(900);
-        tbChangeAccess.setMaxHeight(375);
+        getManager();
+        TableColumn<Person, String> LibNameCol = new TableColumn<Person, String>("Name");
+        LibNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        TableColumn<Person, String> LibSurnCol = new TableColumn<Person, String>("Surname");
+        LibSurnCol.setCellValueFactory(new PropertyValueFactory<Person, String>("surname"));
+        TableColumn<Person, String> LibUserNameCol = new TableColumn<Person, String>("Username");
+        LibUserNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("userName"));
+        TableColumn<Librarian, Integer> Id = new TableColumn<Librarian, Integer>("LibrarianId");
+        Id.setCellValueFactory(new PropertyValueFactory<Librarian, Integer>("librarianID"));
+        TableColumn<Person, Boolean> LibExtraCol = new TableColumn<Person, Boolean>("Manager Access");
+        LibExtraCol.setCellValueFactory(new PropertyValueFactory<Person, Boolean>("managerAccess"));
+
+        TableColumn<Person, String> ManNameCol = new TableColumn<Person, String>("Name");
+        ManNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        TableColumn<Person, String> ManSurnCol = new TableColumn<Person, String>("Surname");
+        ManSurnCol.setCellValueFactory(new PropertyValueFactory<Person, String>("surname"));
+        TableColumn<Person, String> ManUserNameCol = new TableColumn<Person, String>("Username");
+        ManUserNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("userName"));
+        TableColumn<Person, Boolean> ManExtraCol = new TableColumn<Person, Boolean>("Librarian Access");
+        ManExtraCol.setCellValueFactory(new PropertyValueFactory<Person, Boolean>("LibrarianAccess"));
+
+        tbChangeAccessMan.getColumns().addAll(ManNameCol, ManSurnCol, ManUserNameCol,ManExtraCol);
+        tbChangeAccessMan.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tbChangeAccessMan.setMinWidth(900);
+        tbChangeAccessMan.setMaxHeight(60);
+        for (int i = 0; i < Managers.size(); i++) {
+            tbChangeAccessMan.getItems().add(Managers.get(i));
+        }
+        tbChangeAccessLib.getColumns().addAll(LibNameCol, LibSurnCol, LibUserNameCol, Id,LibExtraCol);
+        tbChangeAccessLib.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tbChangeAccessLib.setMinWidth(900);
+        tbChangeAccessLib.setMaxHeight(375);
         for (int i = 0; i < Librarians.size(); i++) {
-            tbChangeAccess.getItems().add(AllEmployees.get(i));
+            tbChangeAccessLib.getItems().add(Librarians.get(i));
         }
 
 
@@ -576,33 +624,68 @@ MainPane.setHgap(5);
         Button GiveLib = new Button("Give Librarian Access");
 
         GiveManager.setOnAction(l ->
-        {           Librarian Lali = (Librarian) tbChangeAccess.getSelectionModel().getSelectedItem();
-                 Lali.setManagerAccess(true);
+        {          try {
+            Librarian Lali = (Librarian) tbChangeAccessLib.getSelectionModel().getSelectedItem();
+            Lali.setManagerAccess(true);
+            for (int i = 0; i < Librarians.size(); i++) {
+                if (Librarians.get(i).getUserName().contentEquals(Lali.getUserName())) {
+                    Librarians.get(i).setManagerAccess(true);
+                }
+            }
+        }
+        catch(Exception ex){
+         Stage X= WrongEmployeeButton(1);
+         X.show();
 
+        }
+            tbChangeAccessLib.getItems().clear();
+
+
+            for (int i = 0; i < Librarians.size(); i++) {
+                tbChangeAccessLib.getItems().add(Librarians.get(i));
+            }
     });
 
         GiveLib.setOnAction(l ->
         {
-            try{
-                Manager Lali = (Manager) tbChangeAccess.getSelectionModel().getSelectedItem();
-                Lali.setHasLibrarianAccess(true);}
-
+            try {
+                Manager Lali = (Manager) tbChangeAccessMan.getSelectionModel().getSelectedItem();
+                Lali.setHasLibrarianAccess(true);
+                for (int i = 0; i < Managers.size(); i++) {
+                    if (Managers.get(i).getUserName().contentEquals(Lali.getUserName())){
+                        Managers.get(i).setHasLibrarianAccess(true);
+                    }
+                }
+            }
             catch(Exception ex){
-
+                Stage X= WrongEmployeeButton(2);
+                X.show();
 
         }
 
+         tbChangeAccessMan.getItems().clear();
 
 
-
-
+            for (int i = 0; i < Managers.size(); i++) {
+                tbChangeAccessMan.getItems().add(Managers.get(i));
+            }
         });
 
+
+
+        GridPane AccessChangePane = new GridPane();
+AccessChangePane.add(tbChangeAccessLib,0,0);
+AccessChangePane.add(tbChangeAccessMan,0,1);
+AccessChangePane.add(GiveManager,1,0);
+AccessChangePane.add(GiveLib,2,0);
+Scene curr = new Scene(AccessChangePane);
+
+AccessMod.setScene(curr);
 
    return AccessMod;
 
     }
-    public static void ManagersAndLibrarians() throws IOException, ClassNotFoundException {
+    public static void getManager() throws IOException, ClassNotFoundException {
         try (
                 FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
                 ObjectInputStream input = new ObjectInputStream(fInput)
@@ -611,13 +694,70 @@ MainPane.setHgap(5);
             while (fInput.available() > 0) {
 
                 Person A = (Person) input.readObject();
-                AllEmployees.add(A);
-
+               if(A instanceof Manager) {
+                   Managers.add((Manager) A);
+               }
             }
 
         }
     }
+    public static void getAdmin() throws IOException, ClassNotFoundException {
+        try (
+                FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
+                ObjectInputStream input = new ObjectInputStream(fInput)
+        ) {
 
+            while (fInput.available() > 0) {
+
+                Person A = (Person) input.readObject();
+                if(A instanceof Administrator) {
+                    Admin.add((Administrator) A);
+                }
+            }
+
+        }
+    }
+    public static Stage WrongEmployeeButton(int i) {
+        Stage newStage = new Stage();
+
+        //Pane
+        BorderPane bPane = new BorderPane();
+
+        //Scene
+        Scene scene = new Scene(bPane);
+
+        //messageLabel
+        Label ID = new Label("Manager selected, you cannot give manager access ");
+        Label Username= new Label("Librarian selected, you cannot give librarian access");
+
+        //buttons
+        Button close = new Button("Close");
+        close.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
+
+        //arrangements
+        bPane.setPadding(new Insets(10));
+        bPane.setStyle("-fx-font-size: 20px;");
+        if (i==1){
+            bPane.setCenter(ID);
+            BorderPane.setAlignment(ID, Pos.CENTER);
+        }
+        else if(i==2) {
+            bPane.setCenter(Username);
+            BorderPane.setAlignment(Username, Pos.CENTER);
+        }
+        bPane.setBottom(close);
+        BorderPane.setAlignment(close, Pos.CENTER_RIGHT);
+
+        //actions
+        close.setOnAction(l -> newStage.close());
+
+        newStage.setTitle("Error");
+        newStage.setScene(scene);
+
+        newStage.setResizable(false);
+        return newStage;
+
+    }
 }
 
 

@@ -17,7 +17,7 @@ import java.util.InputMismatchException;
 public class Librarian extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
-private boolean hasManagerAccess= false;
+private boolean ManagerAccess ;
     private int salary;
     private int librarianID;
 
@@ -29,6 +29,7 @@ private boolean hasManagerAccess= false;
     public Librarian(String name, String surname, Date date, int ID,String Username,String Password) {
         super(name, surname, date, role.LIBRARIAN,Username,Password);
         this.librarianID = ID;
+    ManagerAccess =false;
     }
 
     public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username,String Password, int Salary) {
@@ -37,6 +38,7 @@ private boolean hasManagerAccess= false;
         this.librarianID = ID;
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
+    ManagerAccess =false;
     }
 
 
@@ -186,10 +188,10 @@ private boolean hasManagerAccess= false;
 
     }
     public boolean getManagerAccess(){
-        return hasManagerAccess;
+        return ManagerAccess;
     }
     public void setManagerAccess(boolean A){
-         hasManagerAccess=A;
+         ManagerAccess =A;
     }
 
 

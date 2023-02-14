@@ -28,7 +28,7 @@ public class Main extends Application {
 //                        20,String.valueOf((long)(100*((Math.random()+1)*1000000000))),
 //                        "Supplier "+i,new Date(),500,700,1000));
 //        }
-     Person a = new Administrator("Admin","Admin",new Date(),"RikamODHe","Rika dhemo");
+     Person a = new Administrator("Admin","Admin",new Date(),"RikamODHe","lali");
        a.setUserName("admin");
         a.setPassword("123");
         Person m = new Manager("Manager","Manager",new Date(),"RRd","rm");
@@ -61,6 +61,6 @@ public class Main extends Application {
             }
         }
         System.out.println(p);
-        launch();
+        //launch();
     }
     }
