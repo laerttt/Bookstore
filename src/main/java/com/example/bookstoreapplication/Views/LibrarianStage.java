@@ -1,13 +1,12 @@
 package com.example.bookstoreapplication.Views;
 import com.example.bookstoreapplication.Controls.BookControls;
+import com.example.bookstoreapplication.Controls.LogInControls;
 import com.example.bookstoreapplication.Models.*;
 import com.example.bookstoreapplication.NoHeader.NoHeader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
-import javafx.geometry.VPos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.application.Application;
@@ -39,7 +38,6 @@ public class LibrarianStage extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        int total = 0;
         //panes
         GridPane mainGrid = new GridPane();
         mainGrid.setStyle("-fx-font-size: 15px;");
@@ -91,7 +89,8 @@ public class LibrarianStage extends Application {
         btRemove.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
         Button btLogOut = new Button("Log Out");
         btLogOut.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
-
+        Button btMangerMode = new Button("Manager Mode");
+        btMangerMode.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
         //textFields
         TextField tfSearchBar = new TextField();
         tfSearchBar.setPromptText("\t\t\tSearch by Title / Author / Category / Supplier / ISBN");
@@ -107,6 +106,12 @@ public class LibrarianStage extends Application {
         btPrint.setOnAction(O -> {
             try {
                 printBill(BillsTable);
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            BooksTable.getItems().clear();
+            try {
+                BooksTable.getItems().addAll(BookControls.getBooks());
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -219,6 +224,17 @@ public class LibrarianStage extends Application {
             }
             primaryStage.close();
         });
+        btMangerMode.setOnAction(e->{
+            ManagerView L = new ManagerView();
+            try {
+                L.start(new Stage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            primaryStage.close();
+        });
+
+
         //style
         BooksTable.setPrefWidth(500);
         BooksTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -230,6 +246,8 @@ public class LibrarianStage extends Application {
 
         mainGrid.add(tfSearchBar, 0, 0);
         mainGrid.add(btSearch, 1, 0);
+        if(LogInControls.checkAccess())
+            mainGrid.add(btMangerMode, 1, 0);
         mainGrid.add(lbBooks, 0, 1);
         mainGrid.add(btAdd, 0, 1);
         mainGrid.add(btRemove, 1, 1);
@@ -241,6 +259,7 @@ public class LibrarianStage extends Application {
         mainGrid.add(ClearBill, 1, 3);
         mainGrid.add(btLogOut, 1, 3);
         mainGrid.add(lbTotal, 1, 3);
+        GridPane.setHalignment(btMangerMode, HPos.RIGHT);
         GridPane.setHalignment(btLogOut, HPos.RIGHT);
         GridPane.setHalignment(lbTotal, HPos.LEFT);
         GridPane.setHalignment(lbBooks, HPos.CENTER);

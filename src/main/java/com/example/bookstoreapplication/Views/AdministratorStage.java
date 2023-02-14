@@ -65,7 +65,7 @@ public class AdministratorStage extends Application {
         }
 // search bar modify
         search.setPrefWidth(400);
-        search.setPromptText("\t Enter Name/Surname/LibrarianID/Username");
+        search.setPromptText("Enter Name / Surname / LibrarianID / Username");
 
         // Button Actions
 
@@ -137,7 +137,7 @@ public class AdministratorStage extends Application {
        searchBar.getChildren().add(btSearch);
        searchBar.getChildren().add(btLogOut);
        searchBar.setAlignment(Pos.CENTER);
-       search.setAlignment(Pos.CENTER);
+//       search.setAlignment(Pos.CENTER);
         btLogOut.setAlignment(Pos.CENTER);
       //RightSide
        VBox RightSideTable = new VBox();
@@ -188,9 +188,9 @@ MainPane.setHgap(5);
         TextField tfSurname = new TextField();
         tfSurname.setPromptText("Surname");
         TextField tfPhoneNumber = new TextField();
-        tfPhoneNumber.setPromptText("Phone Number");
+        tfPhoneNumber.setPromptText("+355 6X XX XX XXX");
         TextField tfEmail = new TextField();
-        tfEmail.setPromptText("Email");
+        tfEmail.setPromptText("example@email.com");
         TextField tfLibrarianID = new TextField();
         tfLibrarianID.setPromptText("LibrarianID");
         TextField tfSalary = new TextField();
@@ -501,15 +501,15 @@ MainPane.setHgap(5);
         //buttons
         Button btAreYouSureYes= new Button("Yes");
         Button btAreYouSureNo= new Button("No");
-        btAreYouSureNo.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
-        btAreYouSureYes.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white;");
+        btAreYouSureNo.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white;");
+        btAreYouSureYes.setStyle("-fx-background-color: darkred; -fx-text-fill: white;");
         //arrangements
 
-      YesNo.add(btAreYouSureNo,3,0);
+        YesNo.add(btAreYouSureNo,3,0);
         YesNo.add(btAreYouSureYes,0,0);
-      btAreYouSureYes.setAlignment(Pos.BOTTOM_LEFT);
+        btAreYouSureYes.setAlignment(Pos.BOTTOM_LEFT);
         btAreYouSureNo.setAlignment(Pos.BOTTOM_RIGHT);
-      Main.getChildren().addAll(info,YesNo);
+        Main.getChildren().addAll(info,YesNo);
         Main.setPadding(new Insets(10,10,10,10));
         //actions
         btAreYouSureNo.setOnAction(l -> newStage.close());

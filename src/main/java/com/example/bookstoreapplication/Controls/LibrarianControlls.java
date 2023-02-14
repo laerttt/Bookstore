@@ -66,7 +66,6 @@ public static ArrayList<Book> Books = new ArrayList<>();
         try (FileInputStream fInput = new FileInputStream("src/main/resources/Employee.dat");
              ObjectInputStream input = new ObjectInputStream(fInput)
         ) {
-
             while (fInput.available() > 0) {
                 Person A= (Person) input.readObject();
                 if((A) instanceof Librarian)

@@ -17,19 +17,19 @@ import java.util.InputMismatchException;
 public class Librarian extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = 12345678;
-private boolean ManagerAccess ;
+    private boolean hasManagerAccess;
     private int salary;
     private int librarianID;
 
     public Librarian() {
         super();
-
+        hasManagerAccess=false;
     }
 
     public Librarian(String name, String surname, Date date, int ID,String Username,String Password) {
         super(name, surname, date, role.LIBRARIAN,Username,Password);
         this.librarianID = ID;
-    ManagerAccess =false;
+        hasManagerAccess=false;
     }
 
     public Librarian(String name, String surname, Date date, String phoneNumber, int ID, String email,String Username,String Password, int Salary) {
@@ -38,11 +38,14 @@ private boolean ManagerAccess ;
         this.librarianID = ID;
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
-    ManagerAccess =false;
+        hasManagerAccess=false;
     }
 
 
     //getters
+    public boolean getHasManagerAccess(){
+        return this.hasManagerAccess;
+    }
     @Override
     public String getUserName() {
         return super.userName;
@@ -96,6 +99,9 @@ private boolean ManagerAccess ;
     }
 
     //setters
+    public void setHasManagerAccess(boolean x){
+        this.hasManagerAccess = x;
+    }
     @Override
     public void setEmail(String email) throws InputMismatchException {
         try {                            //if the number entered matches the albanian number tamplate
@@ -185,14 +191,5 @@ private boolean ManagerAccess ;
     public String getLibrarianProperties() {
     return this.name+" "+this.surname+"\nLibrarian ID: "+this.librarianID+"\nE-Mail:\t"+this.email+
             "\nPhone Number:\t"+this.phoneNumber;
-
     }
-    public boolean getManagerAccess(){
-        return ManagerAccess;
-    }
-    public void setManagerAccess(boolean A){
-         ManagerAccess =A;
-    }
-
-
 }

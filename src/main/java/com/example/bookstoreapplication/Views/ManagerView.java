@@ -1,6 +1,7 @@
 package com.example.bookstoreapplication.Views;
 
 import com.example.bookstoreapplication.Controls.BookControls;
+import com.example.bookstoreapplication.Controls.LogInControls;
 import com.example.bookstoreapplication.Models.Book;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -13,7 +14,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -140,7 +140,8 @@ public class ManagerView extends Application {
             GridPane.setHalignment(btLogOut, HPos.RIGHT);
         Button bttitleSearch = new Button("Search");
         Button btClearSearch = new Button("Clear");
-
+        Button btLibStage = new Button("Librarian Mode");
+            btLibStage.setStyle("-fx-background-color: blue;-fx-text-fill: white;");
         //styling
         mainGridPane.setPadding(new Insets(10,10,10,10));
         mainGridPane.add(gridPane,0,0);
@@ -148,6 +149,8 @@ public class ManagerView extends Application {
         rightSearchTView.getChildren().addAll(search,bookTableView);
         rightSearchTView.setSpacing(5);
         search.getChildren().addAll(tfsearchBook,bttitleSearch, btClearSearch);
+        if(LogInControls.checkAccess())
+            search.getChildren().add(btLibStage);
         search.setAlignment(Pos.CENTER);
         search.setSpacing(5);
         gridPane.add(btCheck,0,0);
@@ -289,10 +292,30 @@ public class ManagerView extends Application {
                 }
             }
         });
+        btLibrarians.setOnAction(e->{
+            LibrarianStatistics l = new LibrarianStatistics();
+            try {
+                l.start(new Stage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        btLibStage.setOnAction(e->{
+            LibrarianStage L = new LibrarianStage();
+            try {
+                L.start(new Stage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            managerStage.close();
+        });
+
 
         managerStage.setResizable(false);
         managerStage.setTitle("Bookstore(Manager)");
         managerStage.setScene(scene);
+        System.out.println(LogInWindow.user);
+        System.out.println(LogInWindow.pass);
         managerStage.show();
     }
     public Stage lowStockStage(){
@@ -403,6 +426,7 @@ public class ManagerView extends Application {
                 }
             }
         });
+
         tableView.setPlaceholder(new Label("All books are up on stock."));
         lowStockStage.initModality(Modality.APPLICATION_MODAL);
         lowStockStage.setTitle("Low Stock Books");
@@ -445,4 +469,5 @@ public class ManagerView extends Application {
         stage.setResizable(false);
         return  stage;
     }
+
 }
