@@ -1,73 +1,96 @@
-# Bookstore
-Bookstore application for Java Project
+# Bookstore Management System
 
-The focus of this software will be to manage all important steps 
-of a Library. The software should keep data about all  the books 
-in the library, such us ISBN of the book, title, category of the 
-book, supplier, purchased date, purchased price, original price, 
-selling price, author, stock. At the same time, we should keep 
-track of the sold products by bill number (or Order ID), their 
-sold quantities, prices, and date of transaction.
-The application will have a three-level user system: Librarian, 
-Manager and Administrator. Each will have different  views and 
-usage of the software. Note that each of the users has a username 
-and a password to enter the software  (obviously a role as well).
+A Java-based Bookstore Management application designed to manage key aspects of a library/bookstore. This software stores and processes data on all available and sold books, supports multi-level user access, and enables efficient handling of stock, sales, and employee management.
 
-Librarian -> Has the right to check out books that a customer may 
-need from the bookstore. This means that the  librarian should 
-create a bill and enter the data of the bought books, such as 
-ISBN of the book and its quantity. If the  book is out of stock 
-or does not exist, give an alert to the librarian. The software 
-should provide him the total amount  of the bill, and it should be 
-in printable format (BillNo.txt). The updates in the software 
-file should be done  automatically by adding the data into the 
-respective files.
+## Project Overview
 
-Manager -> The manager has the right to supply the bookstore 
-with the needed books. So, he/she may enter the stock the 
-new book category, and/or add books of the same category to the 
-stock of the bookstore. The manager should  be informed when 
-entered in the system if there are few (usually less than 5) 
-items of a book in the bookstore stock.  The same user may also
-check the performance of the librarians by checking their total 
-number of bills, books sold, and  the total amount of money made 
-for a certain date or between a certain period of time. Also, the 
-statistics about the  books sold and bought should be provided to 
-them whenever requested from them daily, monthly and/or total.
+The application manages data for all books in the library, including:
+- ISBN
+- Title
+- Category
+- Supplier
+- Purchase Date
+- Purchase Price
+- Original Price
+- Selling Price
+- Author
+- Stock Quantity
 
-Administrator -> The administrator has the right to manage almost 
-everything that Librarian and Manager does. Beside  them, he has 
-the right to manage the employees (Librarian and Manager), by 
-registering, modifying, and deleting them. He may keep data about
-them such as: name, birthday, phone, email, salary,  access level, 
-and other information about them. The software should provide to 
-him also data about total incomes (total  of books sold) and total
-cost (total of items bought and staff salaries) during a period.
-Another important role of the administrator can be to revoke 
-permissions from librarians or managers. This means that the 
-permissions should be role-based. This is not mandatory, but 
-you get extra points if you can manage to implement it, otherwise
-keep the permissions static.
+Additionally, the system tracks sold items with:
+- Order ID (Bill Number)
+- Sold Quantity
+- Price
+- Transaction Date
 
-**The data of the bookstore should be stored in binary and text 
-files and managed appropriately by using the proper  Objects.** 
+## User Roles and Permissions
 
-The students should organize the classes in packages and make 
-use of proper data encapsulation. 
+The application includes three user roles, each with unique permissions and views:
 
-# Requirements
+### 1. Librarian
+- **Primary Tasks**: 
+  - Checks out books requested by customers.
+  - Creates bills, entering details like ISBN and quantity.
+  - Generates a printable bill (saved as `BillNo.txt`).
+- **Special Features**:
+  - Alerts when a book is out of stock or unavailable.
+  - Automatically updates inventory records after each sale.
 
-The requirements include:
-1. Encapsulation, inheritance, polymorphism, abstract classes and interfaces
-2. File Handling - Text and Binary IO (both of them)
-3. Validation of Input (Very Important)  
-   Usage of String Functions and/or Regular Expressions for validating the input 4. Exception Handling (try{}catch(){}finally{}, custom Exception Classes
-4. JavaFX UI and Graphics (everything we have covered)
-5. JavaFX Events (Event handling, Inner Classes and other things related to the lesson)
-6. The project should be organised in Model-View-Controller, where the model  should fulfill all requirements from 1 to 4 and View-Controller requirements 5 and 6.
+### 2. Manager
+- **Primary Tasks**:
+  - Supplies and updates stock in the bookstore.
+  - Adds new book categories or updates existing stock.
+- **Special Features**:
+  - Alerts for low-stock items (below 5).
+  - Tracks librarian performance (total bills, books sold, revenue).
+  - Accesses daily, monthly, and total statistics for sold and bought books.
+
+### 3. Administrator
+- **Primary Tasks**:
+  - Manages all functionalities of Librarian and Manager.
+  - Oversees employee management (registers, modifies, deletes librarians and managers).
+- **Special Features**:
+  - Maintains records of employees (name, birthdate, contact, salary, access level).
+  - Tracks bookstore finances (total revenue and costs, including salaries).
+  - Optionally, revokes permissions for specific librarians or managers for enhanced security.
+
+**Note**: Implementing role-based permissions (instead of static permissions) is optional and earns additional points.
+
+## Technical Requirements
+
+This project includes the following key components:
+
+1. **Object-Oriented Programming Concepts**
+   - Encapsulation, inheritance, polymorphism, abstract classes, and interfaces.
    
-Note: Menus are a must for all projects, the application should be fully interactive, and it should have  a login system with different levels. More may be discussed during lessons.
-Be aware: The Final submission of the project should include all source files (as a project in a .rar or  .zip format). In case you do not present your project, you get 0 points.
-The name of the project should be the same as your username and zipped in a file like  nsurname22.zip. The project should also have a note.txt which has a list of username and password  to access your application.
+2. **File Handling**
+   - Stores data in both text and binary files.
 
-WARNING: FXML (or Scene Builder) is not permitted, and will not be evaluated in the project.
+3. **Input Validation**
+   - Validates user input using string functions and/or regular expressions.
+
+4. **Exception Handling**
+   - Uses `try-catch-finally` and custom exception classes.
+
+5. **JavaFX UI and Events**
+   - Incorporates JavaFX for interactive GUI (without FXML or Scene Builder).
+   - Event handling through inner classes and other methods.
+
+6. **Model-View-Controller (MVC) Architecture**
+   - The **Model** should implement all requirements from points 1 to 4.
+   - The **View-Controller** should handle GUI and user interactions as outlined in points 5 and 6.
+
+## Additional Notes
+
+- **Menu Navigation**: Menus are required for all functions.
+- **Login System**: Includes a secure login system with role-based access for Librarian, Manager, and Administrator.
+  
+## Submission Guidelines
+
+- **Project Format**: Submit the project as a `.zip` file containing all source files.
+- **Naming Convention**: Name the zip file as `yourusername.zip` (e.g., `jsmith22.zip`).
+- **Credentials**: Include a `note.txt` file with a list of usernames and passwords for accessing the application.
+  
+**Warning**: Use of FXML or Scene Builder is prohibited and will not be evaluated.
+
+## Author
+Developed as a Java Project for academic purposes.
